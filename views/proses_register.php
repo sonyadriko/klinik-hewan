@@ -46,4 +46,3 @@ header('Content-Type: application/json');
 
 // Return response as JSON
 echo json_encode($response);
-?>
