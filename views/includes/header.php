@@ -80,13 +80,29 @@
 
                         <div class="profile_log dropdown">
                             <div class="user" data-toggle="dropdown">
-                                <span class="thumb"><img src="../assets/images/profile/2.png" alt="" /></span>
+                                <?php 
+                                    if($_SESSION['role'] == 'admin') {
+                                        echo '<span class="thumb"><img src="../assets/images/profile/admin.png" alt="" /></span>';
+                                    } elseif($_SESSION['role'] == 'dokter') {
+                                        echo '<span class="thumb"><img src="../assets/images/profile/dokter.png" alt="" /></span>';
+                                    } elseif($_SESSION['role'] == 'pasien') {
+                                        echo '<span class="thumb"><img src="../assets/images/profile/pasien.png" alt="" /></span>';
+                                    }
+                                ?>
                                 <span class="arrow"><i class="icofont-angle-down"></i></span>
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div class="user-email">
                                     <div class="user">
-                                        <span class="thumb"><img src="../assets/images/profile/2.png" alt="" /></span>
+                                        <?php 
+                                    if($_SESSION['role'] == 'admin') {
+                                        echo '<span class="thumb"><img src="../assets/images/profile/admin.png" alt="" /></span>';
+                                    } elseif($_SESSION['role'] == 'dokter') {
+                                        echo '<span class="thumb"><img src="../assets/images/profile/dokter.png" alt="" /></span>';
+                                    } elseif($_SESSION['role'] == 'pasien') {
+                                        echo '<span class="thumb"><img src="../assets/images/profile/pasien.png" alt="" /></span>';
+                                    }
+                                ?>
                                         <div class="user-info">
                                             <h5><?php echo $_SESSION['nama'] ?></h5>
                                             <span><?php echo $_SESSION['email'] ?></span>
@@ -104,7 +120,7 @@
                                         <span>0.00 USD</span>
                                     </div>
                                 </div> -->
-                                <a href="profile.html" class="dropdown-item">
+                                <a href="profile.php" class="dropdown-item">
                                     <i class="bi bi-person"></i>Profile
                                 </a>
                                 <!-- <a href="wallet.html" class="dropdown-item">

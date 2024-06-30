@@ -13,7 +13,7 @@ ini_set('display_errors', 1); ?>
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Artikel</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="../assets/css/style.css" />
     <!-- Bootstrap Icons -->
@@ -72,15 +72,23 @@ ini_set('display_errors', 1); ?>
                                                 $judul = $display['judul'];                                            
                                                 $isi = $display['isi'];
                                                 $penulis = $display['penulis'];
+                                                 // Memotong isi menjadi 100 kata
+                                                $isi_potong = substr($isi, 0, 500);
+                                                $isi_potong = rtrim($isi_potong); // Menghapus spasi ekstra di akhir
+                                                
+                                                // Menambahkan titik elipsis (...) jika teks dipotong
+                                                if (strlen($isi) > 500) {
+                                                    $isi_potong .= '...';
+                                                }
                                             ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $judul; ?></td>
-                                                <td><?php echo $isi; ?></td>
+                                                <td><?php echo $isi_potong; ?></td>
                                                 <td><?php echo $penulis; ?></td>
                                                 <td>
                                                     <div class="action-buttons">
-                                                        <a href='ubah_kuesioner.php?GetID=<?php echo $id; ?>'
+                                                        <a href='ubah-artikel.php?id=<?php echo $id; ?>'
                                                             class="btn btn-primary btn-user">Ubah</a>
                                                         <button class="btn btn-danger btn-user delete-btn"
                                                             data-id="<?php echo $id; ?>">Hapus</button>
@@ -123,6 +131,8 @@ ini_set('display_errors', 1); ?>
     </script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
     $(document).ready(function() {
         $('#areaTable').DataTable({
@@ -138,6 +148,49 @@ ini_set('display_errors', 1); ?>
                     "next": "<i class='bi bi-arrow-right'></i>"
                 }
             }
+        });
+        // Delete button click event
+        $('.delete-btn').on('click', function() {
+            const artikelID = $(this).data('id');
+            console.log("Artikel ID:", artikelID); // Debug log
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'delete_artikel.php',
+                        type: 'POST',
+                        data: {
+                            id_artikel: artikelID
+                        },
+                        success: function(response) {
+                            console.log("Response:", response); // Debug log
+                            Swal.fire(
+                                'Dihapus!',
+                                'Data berhasil dihapus.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Error:", error); // Debug log
+                            Swal.fire(
+                                'Gagal!',
+                                'Terjadi kesalahan saat menghapus data.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
         });
     });
     </script>

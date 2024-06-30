@@ -8,7 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Dashboard</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
+
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="../assets/css/style.css" />
     <!-- Bootstrap Icons -->
