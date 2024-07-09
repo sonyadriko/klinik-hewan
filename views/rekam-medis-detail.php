@@ -2,21 +2,30 @@
 include '../config/database.php';
 session_start();
 
-// Set timezone to WIB (UTC+7)
-date_default_timezone_set('Asia/Jakarta');
+// Mendapatkan nama hewan dari URL
+$nama_hewan = urldecode($_GET['hewan']);
+
+// Query untuk mendapatkan semua detail reservasi berdasarkan nama hewan
+$get_data = mysqli_query($conn, "SELECT reservasi.*, users.nama AS nama_pemilik, hewan.nama_hewan, hewan.jenis_hewan
+                                FROM reservasi 
+                                JOIN users ON reservasi.user_id = users.id_users 
+                                JOIN hewan ON reservasi.hewan_id = hewan.id_hewan
+                                WHERE hewan.nama_hewan = '$nama_hewan'");
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Rekam Medis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detail Rekam Medis</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico">
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/style.css">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
@@ -37,7 +46,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Rekam Medis</strong>
+                                <strong> Detail Rekam Medis</strong>
                             </p>
                         </div>
                     </div>
@@ -46,74 +55,58 @@ date_default_timezone_set('Asia/Jakarta');
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Rekam Medis</h4>
+                                <h4 class="card-title">Detail Rekam Medis</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="reservasiTable" class="table table-hover table-bordered mb-0">
+                                    <table id="detailReservasiTable" class="table table-hover table-bordered mb-0">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Pemilik</th>
                                                 <th>Nama Hewan</th>
                                                 <th>Jenis Hewan</th>
-                                                <th>Aksi</th>
+                                                <th>Tanggal Reservasi</th>
+                                                <th>Waktu Reservasi</th>
+                                                <th>Jenis Layanan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-        $no = 1;
-        // Query untuk mengambil data reservasi dengan nama hewan unik
-        $get_data = mysqli_query($conn, "SELECT DISTINCT hewan.nama_hewan, hewan.jenis_hewan, reservasi.id_reservasi, users.nama, reservasi.tanggal_reservasi, reservasi.waktu_reservasi, reservasi.jenis_layanan
-                                         FROM reservasi 
-                                         JOIN users ON reservasi.user_id = users.id_users 
-                                         JOIN hewan ON reservasi.hewan_id = hewan.id_hewan");
-        
-        $previous_hewan = ''; // Variabel untuk menyimpan nama hewan sebelumnya
-        
-        while($display = mysqli_fetch_array($get_data)) {
-            $id = $display['id_reservasi'];
-            $pasien = $display['nama'];                                            
-            $hewan = $display['nama_hewan'];
-            $jenis_hewan = $display['jenis_hewan'];
-            $tanggal = $display['tanggal_reservasi'];
-            $waktu = $display['waktu_reservasi'];
-            $layanan = $display['jenis_layanan'];
-            
-            // Jika nama hewan berbeda dengan sebelumnya, tambahkan baris baru
-            if ($hewan != $previous_hewan) {
-        ?>
+                                            $no = 1;
+                                            while($display = mysqli_fetch_array($get_data)) {
+                                                $nama_pemilik = $display['nama_pemilik'];                                            
+                                                $nama_hewan = $display['nama_hewan'];
+                                                $jenis_hewan = $display['jenis_hewan'];
+                                                $tanggal_reservasi = $display['tanggal_reservasi'];
+                                                $waktu_reservasi = $display['waktu_reservasi'];
+                                                $jenis_layanan = $display['jenis_layanan'];
+                                            ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td><?php echo $pasien; ?></td>
-                                                <td><?php echo $hewan; ?></td>
+                                                <td><?php echo $nama_pemilik; ?></td>
+                                                <td><?php echo $nama_hewan; ?></td>
                                                 <td><?php echo $jenis_hewan; ?></td>
-                                                <td>
-                                                    <div class="action-buttons">
-                                                        <a href='rekam-medis-detail.php?hewan=<?php echo urlencode($hewan); ?>'
-                                                            class="btn btn-info btn-user">Detail</a>
-                                                    </div>
-                                                </td>
+                                                <td><?php echo $tanggal_reservasi; ?></td>
+                                                <td><?php echo $waktu_reservasi; ?></td>
+                                                <td><?php echo $jenis_layanan; ?></td>
                                             </tr>
                                             <?php
-                $no++;
-            }
-            $previous_hewan = $hewan; // Simpan nama hewan sebelumnya untuk perbandingan selanjutnya
-        }
-        ?>
+                                            $no++;
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="rekam-medis.php" class="btn btn-danger">Kembali</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
-
     </div>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
@@ -123,10 +116,9 @@ date_default_timezone_set('Asia/Jakarta');
     </script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     $(document).ready(function() {
-        var table = $('#reservasiTable').DataTable({
+        $('#detailReservasiTable').DataTable({
             "paging": true,
             "searching": true,
             "ordering": true,
@@ -140,13 +132,8 @@ date_default_timezone_set('Asia/Jakarta');
                 }
             }
         });
-
-        $('#layananFilter').change(function() {
-            var layanan = $(this).val();
-            table.column(4).search(layanan).draw();
-        });
     });
     </script>
 </body>
 
-</html>z
+</html>

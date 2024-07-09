@@ -20,12 +20,16 @@
                     <span><i class="bi bi-calendar-check"></i></span>
                 </a>
             </li>
+            <?php if($_SESSION['role'] == 'admin' && $_SESSION['role'] == 'dokter'){?>
+
+
             <li>
                 <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
                     id="settings">
                     <span><i class="bi bi-file-medical"></i></span>
                 </a>
             </li>
+            <?php  } ?>
             <li>
                 <a href="akun-pasien.php" data-toggle="tooltip" data-placement="right" title="Akun Pasien">
                     <span><i class="bi bi-person-circle"></i></span>

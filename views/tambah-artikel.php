@@ -9,25 +9,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $judul = $_POST['judul'];
         $isi = $_POST['isi'];
         $penulis = $_SESSION['nama']; // Menggunakan session untuk mendapatkan nama penulis
-        $tanggal = date('Y-m-d H:i:s'); // Mendapatkan tanggal saat ini
+        $tanggal = date('Y-m-d H:i:s'); // Mendapatkan tanggal saat ini\
 
-        $insert_query = "INSERT INTO artikel (judul, isi, penulis, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("sssss", $judul, $isi, $penulis, $tanggal, $tanggal);
+        $target_dir = "../uploads/";
+        $target_file = $target_dir . basename($_FILES["gambar"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        if ($stmt->execute()) {
-            $stmt->close();
-            $conn->close();
-            // Redirect to artikel.php after successfully adding artikel
-            header("Location: artikel.php");
-            exit();
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-    } else {
-        echo "All fields are required.";
-    }
-}
+         // Check if image file is a actual image or fake image
+         $check = getimagesize($_FILES["gambar"]["tmp_name"]);
+         if($check !== false) {
+             if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
+                 // Gambar berhasil diunggah, simpan path gambar ke database
+                 $gambar_path = $target_file;
+ 
+                 $insert_query = "INSERT INTO artikel (image, judul, isi, penulis, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+                 $stmt = $conn->prepare($insert_query);
+                 $stmt->bind_param("ssssss", $gambar_path, $judul, $isi, $penulis, $tanggal, $tanggal);
+ 
+                 if ($stmt->execute()) {
+                     $stmt->close();
+                     $conn->close();
+                     // Redirect to artikel.php after successfully adding artikel
+                     header("Location: artikel.php");
+                     exit();
+                 } else {
+                     echo "Error: " . $stmt->error;
+                 }
+             } else {
+                 echo "Sorry, there was an error uploading your file.";
+             }
+         } else {
+             echo "File is not an image.";
+         }
+     } else {
+         echo "All fields are required.";
+     }
+ }
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <h4 class="card-title">Form Tambah Artikel</h4>
                             </div>
                             <div class="card-body">
-                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST"
+                                    enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul</label>
                                         <input type="text" class="form-control" id="judul" name="judul" required>
@@ -79,6 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="mb-3">
                                         <label for="isi" class="form-label">Isi Artikel</label>
                                         <textarea class="form-control" id="isi" name="isi" rows="5" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gambar" class="form-label">Unggah Gambar</label>
+                                        <input type="file" class="form-control" id="gambar" name="gambar"
+                                            accept="image/*" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
