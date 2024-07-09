@@ -20,6 +20,7 @@ if (isset($_GET['id'])) {
         $judul = $row['judul'];
         $isi = $row['isi'];
         $penulis = $row['penulis'];
+        $gambar_lama = $row['image']; // Menyimpan path gambar lama
     } else {
         echo "Artikel tidak ditemukan.";
         exit();
@@ -30,6 +31,7 @@ if (isset($_GET['id'])) {
     echo "ID artikel tidak ditemukan.";
     exit();
 }
+
 date_default_timezone_set('Asia/Jakarta');
 // Proses form jika ada POST request untuk menyimpan perubahan
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -37,10 +39,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $judul_baru = $_POST['judul'];
         $isi_baru = $_POST['isi'];
         $updated = date('Y-m-d H:i:s'); 
+        $gambar_baru = $gambar_lama; // Inisialisasi dengan gambar lama
+
+        // Periksa apakah ada gambar yang diunggah
+        if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+            $file_tmp_path = $_FILES['gambar']['tmp_name'];
+            $file_name = $_FILES['gambar']['name'];
+            $file_size = $_FILES['gambar']['size'];
+            $file_type = $_FILES['gambar']['type'];
+            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+            $allowed_ext = array("jpg", "jpeg", "png", "gif");
+            if (in_array($file_ext, $allowed_ext)) {
+                $upload_dir = '../uploads/';
+                $dest_path = $upload_dir . $file_name;
+
+                if (move_uploaded_file($file_tmp_path, $dest_path)) {
+                    $gambar_baru = $dest_path;
+                } else {
+                    echo "Error saat mengunggah gambar.";
+                }
+            } else {
+                echo "Format file gambar tidak valid.";
+            }
+        }
 
         // Query untuk melakukan update artikel berdasarkan ID
-        $stmt_update = $conn->prepare("UPDATE artikel SET judul = ?, isi = ?, updated_at = ? WHERE id_artikel = ?");
-        $stmt_update->bind_param("sssi", $judul_baru, $isi_baru, $updated, $id_artikel);
+        $stmt_update = $conn->prepare("UPDATE artikel SET judul = ?, isi = ?, image = ?, updated_at = ? WHERE id_artikel = ?");
+        $stmt_update->bind_param("ssssi", $judul_baru, $isi_baru, $gambar_baru, $updated, $id_artikel);
 
         if ($stmt_update->execute()) {
             $stmt_update->close();
@@ -98,7 +124,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <h4 class="card-title">Form Edit Artikel</h4>
                             </div>
                             <div class="card-body">
-                                <form action="ubah-artikel.php?id=<?php echo $id_artikel; ?>" method="POST">
+                                <form action="ubah-artikel.php?id=<?php echo $id_artikel; ?>" method="POST"
+                                    enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul</label>
                                         <input type="text" class="form-control" id="judul" name="judul" required
@@ -106,8 +133,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     <div class="mb-3">
                                         <label for="isi" class="form-label">Isi Artikel</label>
-                                        <textarea class="form-control" id="isi" name="isi"
-                                            rows="5"><?php echo $isi; ?></textarea>
+                                        <textarea class="form-control" style="height: auto;" id="isi" name="isi"
+                                            rows="10"><?php echo $isi; ?></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gambar" class="form-label">Gambar</label>
+                                        <input type="file" class="form-control" id="gambar" name="gambar">
+                                        <?php if ($gambar_lama): ?>
+                                        <img src="<?php echo $gambar_lama; ?>" alt="Gambar Artikel" width="200">
+                                        <?php endif; ?>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                 </form>

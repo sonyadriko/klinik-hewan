@@ -96,7 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     <div class="mb-3">
                                         <label for="isi" class="form-label">Isi Artikel</label>
-                                        <textarea class="form-control" id="isi" name="isi" rows="5" required></textarea>
+                                        <textarea class="form-control" id="isi" name="isi" rows="10"
+                                            required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="gambar" class="form-label">Unggah Gambar</label>

@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="brand-logo">
-        <a href="index.html"><img src="../assets/images/logo.jpg" alt="" width="30" />
+        <a href="dashboard.php"><img src="../assets/images/logo.jpg" alt="" width="30" />
         </a>
     </div>
     <div class="menu">
@@ -10,28 +10,34 @@
                     <span><i class="bi bi-house"></i></span>
                 </a>
             </li>
+            <?php if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'dokter'){?>
             <li>
                 <a href="artikel.php" data-toggle="tooltip" data-placement="right" title="Artikel">
                     <span><i class="bi bi-globe"></i></span>
                 </a>
             </li>
+            <?php  } ?>
+
             <li>
                 <a href="reservasi.php" data-toggle="tooltip" data-placement="right" title="Reservasi">
                     <span><i class="bi bi-calendar-check"></i></span>
                 </a>
             </li>
-            <?php if($_SESSION['role'] == 'admin' && $_SESSION['role'] == 'dokter'){?>
-
-
+            <?php if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'dokter'){?>
             <li>
                 <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
                     id="settings">
                     <span><i class="bi bi-file-medical"></i></span>
                 </a>
             </li>
-            <?php  } ?>
             <li>
                 <a href="akun-pasien.php" data-toggle="tooltip" data-placement="right" title="Akun Pasien">
+                    <span><i class="bi bi-person-circle"></i></span>
+                </a>
+            </li>
+            <?php  } ?>
+            <li>
+                <a href="profile.php" data-toggle="tooltip" data-placement="right" title="Profile">
                     <span><i class="bi bi-person-circle"></i></span>
                 </a>
             </li>

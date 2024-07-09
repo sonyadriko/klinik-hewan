@@ -64,8 +64,8 @@ $get_articles = mysqli_query($conn, "SELECT * FROM artikel");
                     <div class="col-xl-12">
                         <div class="page-title-content">
                             <p>
-                                Welcome Back,
-                                <strong> Jannatul Maowa!</strong>
+                                Selamat Datang,
+                                <strong><?php echo $_SESSION['nama'] ?></strong>
                             </p>
                         </div>
                     </div>

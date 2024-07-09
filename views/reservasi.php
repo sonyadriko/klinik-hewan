@@ -124,6 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
+                                <div class="history-button mt-4">
+                                    <a href="history-reservasi.php" class="btn btn-secondary btn-user">History</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,61 +215,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                 </div>
-            </div>
 
+
+            </div>
+            <?php } ?>
 
         </div>
-        <?php } ?>
 
-    </div>
-
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/scripts.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js">
-    </script>
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        <?php if ($success) { ?>
-        Swal.fire({
-            title: 'Sukses',
-            text: 'Reservasi berhasil dibuat!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = 'dashboard.php';
-            }
-        });
-        <?php } ?>
-    });
-    </script>
-    <script>
-    $(document).ready(function() {
-        var table = $('#reservasiTable').DataTable({
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "lengthChange": true,
-            "pageLength": 10,
-            "language": {
-                "paginate": {
-                    "previous": "<i class='bi bi-arrow-left'></i>",
-                    "next": "<i class='bi bi-arrow-right'></i>"
+        <script src="../assets/vendor/jquery/jquery.min.js"></script>
+        <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/scripts.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js">
+        </script>
+        <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php if ($success) { ?>
+            Swal.fire({
+                title: 'Sukses',
+                text: 'Reservasi berhasil dibuat!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'dashboard.php';
                 }
-            }
+            });
+            <?php } ?>
         });
+        </script>
+        <script>
+        $(document).ready(function() {
+            var table = $('#reservasiTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "lengthChange": true,
+                "pageLength": 10,
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='bi bi-arrow-left'></i>",
+                        "next": "<i class='bi bi-arrow-right'></i>"
+                    }
+                }
+            });
 
-        $('#layananFilter').change(function() {
-            var layanan = $(this).val();
-            table.column(4).search(layanan).draw();
+            $('#layananFilter').change(function() {
+                var layanan = $(this).val();
+                table.column(4).search(layanan).draw();
+            });
         });
-    });
-    </script>
+        </script>
 </body>
 
 </html>
