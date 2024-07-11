@@ -110,16 +110,13 @@ $get_articles = mysqli_query($conn, "SELECT * FROM artikel");
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="../assets/vendor/apexchart/apexcharts.min.js"></script>
-    <script src="../assets/js/plugins/apex-price.js"></script>
-
     <script src="../assets/vendor/basic-table/jquery.basictable.min.js"></script>
     <script src="../assets/js/plugins/basic-table-init.js"></script>
 
-    <script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar-init.js"></script>
+    <!-- <script src="../assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
+    <!-- <script src="../assets/js/plugins/perfect-scrollbar-init.js"></script> -->
 
-    <script src="../assets/js/dashboard.js"></script>
+    <!-- <script src="../assets/js/dashboard.js"></script> -->
 
     <script src="../assets/js/scripts.js"></script>
 </body>

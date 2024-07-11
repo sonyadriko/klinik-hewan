@@ -1,40 +1,6 @@
 <?php
 include '../config/database.php';
 session_start();
-
-// Set timezone to WIB (UTC+7)
-date_default_timezone_set('Asia/Jakarta');
-
-// Initialize variables
-$tanggal_reservasi = $waktu_reservasi = $keluhan = $service_type = "";
-$error_message = "";
-$success = false;
-
-// Proses tambah reservasi jika form sudah disubmit
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['tanggal_reservasi'], $_POST['waktu_reservasi'], $_POST['keluhan'], $_POST['hewan_id'], $_POST['service_type'])) {
-        $tanggal_reservasi = $_POST['tanggal_reservasi'];
-        $waktu_reservasi = $_POST['waktu_reservasi'];
-        $keluhan = $_POST['keluhan'];
-        $hewan_id = $_POST['hewan_id'];
-        $service_type = $_POST['service_type'];
-        $user_id = $_SESSION['id_users']; // Menggunakan session untuk mendapatkan id pengguna
-
-        $insert_query = "INSERT INTO reservasi (user_id, hewan_id, tanggal_reservasi, waktu_reservasi, keluhan, jenis_layanan) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("iissss", $user_id, $hewan_id, $tanggal_reservasi, $waktu_reservasi, $keluhan, $service_type);
-
-        if ($stmt->execute()) {
-            $success = true;
-        } else {
-            $error_message = "Error: " . $stmt->error;
-        }
-        $stmt->close();
-        $conn->close();
-    } else {
-        $error_message = "All fields are required.";
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,8 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body class="dashboard">
@@ -82,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <h4 class="card-title">Form Reservasi</h4>
                             </div>
                             <div class="card-body">
-                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                                <form id="reservasiForm" action="simpan_reservasi.php" method="POST">
                                     <div class="mb-3">
                                         <label for="tanggal_reservasi" class="form-label">Tanggal Reservasi</label>
                                         <input type="date" class="form-control" id="tanggal_reservasi"
@@ -92,11 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <label for="waktu_reservasi" class="form-label">Waktu Reservasi</label>
                                         <input type="time" class="form-control" id="waktu_reservasi"
                                             name="waktu_reservasi" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="keluhan" class="form-label">Keluhan</label>
-                                        <textarea class="form-control" id="keluhan" name="keluhan" rows="3"
-                                            required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="hewan_id" class="form-label">Pilih Hewan</label>
@@ -125,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
                                 <div class="history-button mt-4">
-                                    <a href="history-reservasi.php" class="btn btn-secondary btn-user">History</a>
+                                    <a href="history-reservasi.php" class="btn btn-info btn-user">History</a>
                                 </div>
                             </div>
                         </div>
@@ -215,60 +174,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                 </div>
-
-
             </div>
-            <?php } ?>
-
         </div>
+        <?php } ?>
 
-        <script src="../assets/vendor/jquery/jquery.min.js"></script>
-        <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/scripts.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js">
-        </script>
-        <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php if ($success) { ?>
-            Swal.fire({
-                title: 'Sukses',
-                text: 'Reservasi berhasil dibuat!',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'dashboard.php';
+    </div>
+
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/scripts.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js">
+    </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        var table = $('#reservasiTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "pageLength": 10,
+            "language": {
+                "paginate": {
+                    "previous": "<i class='bi bi-arrow-left'></i>",
+                    "next": "<i class='bi bi-arrow-right'></i>"
                 }
-            });
-            <?php } ?>
+            }
         });
-        </script>
-        <script>
-        $(document).ready(function() {
-            var table = $('#reservasiTable').DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "lengthChange": true,
-                "pageLength": 10,
-                "language": {
-                    "paginate": {
-                        "previous": "<i class='bi bi-arrow-left'></i>",
-                        "next": "<i class='bi bi-arrow-right'></i>"
+
+        $('#layananFilter').change(function() {
+            var layanan = $(this).val();
+            table.column(4).search(layanan).draw();
+        });
+    });
+    </script>
+    <script>
+    // Handle form submission with AJAX
+    $(document).ready(function() {
+        $('#reservasiForm').submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                dataType: "json",
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Reservasi berhasil dibuat!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'dashboard.php';
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Gagal',
+                            text: 'Terjadi kesalahan saat menyimpan reservasi.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Gagal',
+                        text: 'Terjadi kesalahan saat menyimpan reservasi.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
-
-            $('#layananFilter').change(function() {
-                var layanan = $(this).val();
-                table.column(4).search(layanan).draw();
-            });
         });
-        </script>
+    });
+    </script>
 </body>
 
 </html>
