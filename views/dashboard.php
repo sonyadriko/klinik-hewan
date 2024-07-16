@@ -1,6 +1,11 @@
 <?php 
 include '../config/database.php';
 session_start();
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 $get_articles = mysqli_query($conn, "SELECT * FROM artikel");
 ?>
 <!DOCTYPE html>

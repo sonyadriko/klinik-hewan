@@ -1,6 +1,11 @@
 <?php
 include '../config/database.php';
 session_start();
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 // Set timezone to WIB (UTC+7)
 date_default_timezone_set('Asia/Jakarta');
 // Proses tambah artikel jika form sudah disubmit

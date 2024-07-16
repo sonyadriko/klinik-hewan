@@ -1,6 +1,11 @@
 <?php
 include '../config/database.php';
 session_start();
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,7 +130,7 @@ session_start();
 
                                         </div>
                                     </div>
-                                    <table id="reservasiTable" class="table table-hover table-bordered mb-0">
+                                    <table id="reservasiTable" class="table table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -139,7 +144,7 @@ session_start();
                                         <tbody>
                                             <?php 
                                             $no = 1;
-                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi JOIN users ON reservasi.user_id = users.id_users JOIN hewan ON reservasi.user_id = hewan.users_id");
+                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE reservasi.status = 'pending'");
                                             while($display = mysqli_fetch_array($get_data)) {
                                                 $id = $display['id_reservasi'];
                                                 $pasien = $display['nama'];                                            
@@ -156,10 +161,12 @@ session_start();
                                                 <td><?php echo $layanan; ?></td>
                                                 <td>
                                                     <div class="action-buttons">
-                                                        <a href='ubah-artikel.php?id=<?php echo $id; ?>'
-                                                            class="btn btn-primary btn-user">Ubah</a>
-                                                        <button class="btn btn-danger btn-user delete-btn"
-                                                            data-id="<?php echo $id; ?>">Hapus</button>
+                                                        <a href='layani_reservasi.php?id=<?php echo $id; ?>'
+                                                            class="btn btn-primary btn-user">Layani</a>
+                                                        <a href='delete_reservasi.php?id=<?php echo $id; ?>'
+                                                            class="btn btn-danger btn-user delete-btn">Hapus</a>
+                                                        <!-- <button class="btn btn-danger btn-user delete-btn"
+                                                            data-id="<?php echo $id; ?>">Hapus</button> -->
                                                     </div>
                                                 </td>
                                             </tr>

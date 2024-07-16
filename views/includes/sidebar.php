@@ -10,20 +10,32 @@
                     <span><i class="bi bi-house"></i></span>
                 </a>
             </li>
-            <?php if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'dokter'){?>
+            <?php if($_SESSION['role'] == 'admin'){?>
             <li>
                 <a href="artikel.php" data-toggle="tooltip" data-placement="right" title="Artikel">
                     <span><i class="bi bi-globe"></i></span>
                 </a>
             </li>
             <?php  } ?>
+            <?php if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'pasien'){?>
 
             <li>
                 <a href="reservasi.php" data-toggle="tooltip" data-placement="right" title="Reservasi">
                     <span><i class="bi bi-calendar-check"></i></span>
                 </a>
             </li>
-            <?php if($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'dokter'){?>
+            <?php  } ?>
+
+            <?php if($_SESSION['role'] == 'dokter'){?>
+            <li>
+                <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
+                    id="settings">
+                    <span><i class="bi bi-file-medical"></i></span>
+                </a>
+            </li>
+            <?php  } ?>
+
+            <?php if($_SESSION['role'] == 'admin'){?>
             <li>
                 <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
                     id="settings">

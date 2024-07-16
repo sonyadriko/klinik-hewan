@@ -1,9 +1,15 @@
 <?php
 include '../config/database.php';
 session_start();
-
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 // Set timezone to WIB (UTC+7)
 date_default_timezone_set('Asia/Jakarta');
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,49 +63,59 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <th>Nama Pemilik</th>
                                                 <th>Nama Hewan</th>
                                                 <th>Jenis Hewan</th>
+                                                <th>Layanan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-        $no = 1;
-        // Query untuk mengambil data reservasi dengan nama hewan unik
-        $get_data = mysqli_query($conn, "SELECT DISTINCT hewan.nama_hewan, hewan.jenis_hewan, reservasi.id_reservasi, users.nama, reservasi.tanggal_reservasi, reservasi.waktu_reservasi, reservasi.jenis_layanan
-                                         FROM reservasi 
-                                         JOIN users ON reservasi.user_id = users.id_users 
-                                         JOIN hewan ON reservasi.hewan_id = hewan.id_hewan");
-        
-        $previous_hewan = ''; // Variabel untuk menyimpan nama hewan sebelumnya
-        
-        while($display = mysqli_fetch_array($get_data)) {
-            $id = $display['id_reservasi'];
-            $pasien = $display['nama'];                                            
-            $hewan = $display['nama_hewan'];
-            $jenis_hewan = $display['jenis_hewan'];
-            $tanggal = $display['tanggal_reservasi'];
-            $waktu = $display['waktu_reservasi'];
-            $layanan = $display['jenis_layanan'];
-            
-            // Jika nama hewan berbeda dengan sebelumnya, tambahkan baris baru
-            if ($hewan != $previous_hewan) {
-        ?>
+                                            $no = 1;
+                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE reservasi.status = 'proses'");
+                                            while($display = mysqli_fetch_array($get_data)) {
+                                                $id = $display['id_reservasi'];
+                                                $pasien = $display['nama'];                                            
+                                                $hewan = $display['nama_hewan'];
+                                                $tanggal = $display['tanggal_reservasi'];
+                                                $waktu = $display['waktu_reservasi'];
+                                                $layanan = $display['jenis_layanan'];
+                                                $jenis_hewan = $display['jenis_hewan'];
+
+                                                $check_query = "SELECT * FROM rekam_medis WHERE reservasi_id = ?";
+                                                $stmt = $conn->prepare($check_query);
+                                                $stmt->bind_param("i", $id);
+                                                $stmt->execute();
+                                                $record_result = $stmt->get_result();
+                                                $record_exists = $record_result->num_rows > 0;
+                                                $stmt->close();
+
+                                            ?>
+
+
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
                                                 <td><?php echo $jenis_hewan; ?></td>
+                                                <td><?php echo $layanan; ?></td>
                                                 <td>
-                                                    <div class="action-buttons">
-                                                        <a href='rekam-medis-detail.php?hewan=<?php echo urlencode($hewan); ?>'
-                                                            class="btn btn-info btn-user">Detail</a>
+                                                    <div class="card-body">
+                                                        <div class="action-buttons">
+                                                            <?php if ($record_exists): ?>
+                                                            <a href="lihat-rekam-medis.php?id=<?php echo urlencode($id); ?>"
+                                                                class="btn btn-success btn-user">Lihat Laporan</a>
+                                                            <?php else: ?>
+                                                            <a href="tambah-rekam-medis.php?id=<?php echo urlencode($id); ?>"
+                                                                class="btn btn-info btn-user">Isi Laporan</a>
+                                                            <?php endif; ?>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <?php
                 $no++;
             }
-            $previous_hewan = $hewan; // Simpan nama hewan sebelumnya untuk perbandingan selanjutnya
-        }
+            // $previous_hewan = $hewan; // Simpan nama hewan sebelumnya untuk perbandingan selanjutnya
+        // }
         ?>
                                         </tbody>
                                     </table>
@@ -149,4 +165,4 @@ date_default_timezone_set('Asia/Jakarta');
     </script>
 </body>
 
-</html>z
+</html>

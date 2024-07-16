@@ -1,6 +1,11 @@
 <?php 
 include '../config/database.php';
 session_start();
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +99,7 @@ session_start();
                         </div>
                     </div>
                 </div>
+                <?php if($_SESSION['role'] == 'pasien'){?>
                 <div class="row">
                     <div class="col-xxl-12">
                         <div class="card">
@@ -147,6 +153,7 @@ session_start();
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
 

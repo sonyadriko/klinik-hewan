@@ -4,7 +4,11 @@ session_start();
 
 // Set timezone to WIB (UTC+7)
 date_default_timezone_set('Asia/Jakarta');
-
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 // Initialize variables
 $nama_hewan = $jenis_kelamin = $jenis_hewan = "";
 $error_message = "";

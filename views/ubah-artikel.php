@@ -1,6 +1,11 @@
 <?php
 include '../config/database.php';
 session_start();
+if (!isset($_SESSION['nama'])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
