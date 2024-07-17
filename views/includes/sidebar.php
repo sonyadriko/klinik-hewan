@@ -36,23 +36,26 @@
             <?php  } ?>
 
             <?php if($_SESSION['role'] == 'admin'){?>
-            <li>
+            <!-- <li>
                 <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
                     id="settings">
                     <span><i class="bi bi-file-medical"></i></span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="akun-pasien.php" data-toggle="tooltip" data-placement="right" title="Akun Pasien">
                     <span><i class="bi bi-person-circle"></i></span>
                 </a>
             </li>
             <?php  } ?>
+            <?php if($_SESSION['role'] == 'dokter' || $_SESSION['role'] == 'pasien'){?>
             <li>
                 <a href="profile.php" data-toggle="tooltip" data-placement="right" title="Profile">
                     <span><i class="bi bi-person-circle"></i></span>
                 </a>
             </li>
+            <?php  } ?>
+
             <li class="logout">
                 <a href="logout.php" data-toggle="tooltip" data-placement="right" title="Signout">
                     <span><i class="bi bi-box-arrow-right"></i></span>

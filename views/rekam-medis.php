@@ -79,6 +79,10 @@ date_default_timezone_set('Asia/Jakarta');
                                                 $waktu = $display['waktu_reservasi'];
                                                 $layanan = $display['jenis_layanan'];
                                                 $jenis_hewan = $display['jenis_hewan'];
+                                                if ($layanan === 'pet_hotel') {
+                                                    $layanan = 'Pet Hotel';
+                                                }
+                                                $slot = $display['slot_reservasi'];
 
                                                 $check_query = "SELECT * FROM rekam_medis WHERE reservasi_id = ?";
                                                 $stmt = $conn->prepare($check_query);
@@ -96,7 +100,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
                                                 <td><?php echo $jenis_hewan; ?></td>
-                                                <td><?php echo $layanan; ?></td>
+                                                <td><?php echo ucwords($layanan); ?></td>
                                                 <td>
                                                     <div class="card-body">
                                                         <div class="action-buttons">

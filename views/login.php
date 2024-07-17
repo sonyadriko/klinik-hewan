@@ -23,7 +23,7 @@
                     <div class="col-xl-5 col-md-6">
                         <div class="mini-logo text-center my-4">
                             <img src="../assets/images/logo.jpg" alt="" width="100" height="100" />
-                            <h4 class="card-title mt-5">Sign in to Klinik Hewan</h4>
+                            <h4 class="card-title mt-5">Masuk ke Klinik Hewan</h4>
                         </div>
                         <div class="auth-form card">
                             <div class="card-body">

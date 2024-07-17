@@ -1,39 +1,64 @@
 <?php
-include '../config/database.php';
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include '../config/database.php';
 
-// Set timezone to WIB (UTC+7)
-date_default_timezone_set('Asia/Jakarta');
+$response = ['status' => '', 'message' => ''];
 
-// Initialize variables
-$tanggal_reservasi = $waktu_reservasi = $keluhan = $service_type = "";
-$error_message = "";
-$success = false;
-
-// Proses tambah reservasi jika form sudah disubmit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['tanggal_reservasi'], $_POST['waktu_reservasi'], $_POST['hewan_id'], $_POST['service_type'])) {
-        $tanggal_reservasi = $_POST['tanggal_reservasi'];
-        $waktu_reservasi = $_POST['waktu_reservasi'];
-        $hewan_id = $_POST['hewan_id'];
-        $service_type = $_POST['service_type'];
-        $user_id = $_SESSION['id_users']; // Menggunakan session untuk mendapatkan id pengguna
+    $tanggal_reservasi = $_POST['tanggal_reservasi'];
+    $slot_reservasi = $_POST['slot_reservasi'];
+    $hewan_id = $_POST['hewan_id'];
+    $service_type = $_POST['service_type'];
+    $user_id = $_SESSION['id_users'];
+    $status = 'pending';
 
-        $insert_query = "INSERT INTO reservasi (user_id, hewan_id, tanggal_reservasi, waktu_reservasi, jenis_layanan) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("iisss", $user_id, $hewan_id, $tanggal_reservasi, $waktu_reservasi, $service_type);
+    // Check slot availability
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND slot_reservasi = ? AND jenis_layanan = ?");
+    if ($stmt === false) {
+        $response['status'] = 'error';
+        $response['message'] = "Error preparing statement: " . htmlspecialchars($conn->error);
+        echo json_encode($response);
+        exit;
+    }
+    $stmt->bind_param("sss", $tanggal_reservasi, $slot_reservasi, $service_type);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result === false) {
+        $response['status'] = 'error';
+        $response['message'] = "Error executing statement: " . htmlspecialchars($stmt->error);
+        echo json_encode($response);
+        exit;
+    }
+    $row = $result->fetch_assoc();
+    $stmt->close();
 
+    if ($row['count'] < 4) { // Assuming 4 slots per time period
+        // Slot is available, proceed with reservation
+        $stmt = $conn->prepare("INSERT INTO reservasi (tanggal_reservasi, slot_reservasi, hewan_id, jenis_layanan, user_id, status) VALUES (?, ?, ?, ?, ?, ?)");
+        if ($stmt === false) {
+            $response['status'] = 'error';
+            $response['message'] = "Error preparing statement: " . htmlspecialchars($conn->error);
+            echo json_encode($response);
+            exit;
+        }
+        $stmt->bind_param("ssssis", $tanggal_reservasi, $slot_reservasi, $hewan_id, $service_type, $user_id, $status);
         if ($stmt->execute()) {
-            $success = true;
+            $response['status'] = 'success';
+            $response['message'] = "Reservasi Berhasil!";
         } else {
-            $error_message = "Error: " . $stmt->error;
+            $response['status'] = 'error';
+            $response['message'] = "Error executing statement: " . htmlspecialchars($stmt->error);
         }
         $stmt->close();
-        $conn->close();
     } else {
-        $error_message = "All fields are required.";
+        // Slot is not available
+        $response['status'] = 'error';
+        $response['message'] = "Slot yang dipilih sudah penuh. Silakan pilih slot lain.";
     }
-}
 
-echo json_encode(array("success" => $success));
+    $conn->close();
+    echo json_encode($response);
+}
 ?>

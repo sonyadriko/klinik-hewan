@@ -83,13 +83,14 @@ date_default_timezone_set('Asia/Jakarta');
                                                 $hewan = $display['nama_hewan'];
                                                 $tanggal = $display['tanggal_reservasi'];
                                                 $waktu = $display['waktu_reservasi'];
+                                                $slot = $display['slot_reservasi'];
                                                 $layanan = $display['jenis_layanan'];
                                             ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
-                                                <td><?php echo $tanggal . ', ' . $waktu; ?></td>
+                                                <td><?php echo $tanggal . ', ' . $slot; ?></td>
                                                 <td><?php echo $layanan; ?></td>
                                             </tr>
                                             <?php
