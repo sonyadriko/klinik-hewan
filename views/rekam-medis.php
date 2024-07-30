@@ -43,7 +43,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Rekam Medis</strong>
+                                <strong> Rekam Medis Pemeriksaan</strong>
                             </p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Rekam Medis</h4>
+                                <h4 class="card-title">Data Rekam Medis Pemeriksaan</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -60,17 +60,18 @@ date_default_timezone_set('Asia/Jakarta');
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Tanggal</th>
                                                 <th>Nama Pemilik</th>
                                                 <th>Nama Hewan</th>
                                                 <th>Jenis Hewan</th>
-                                                <th>Layanan</th>
+                                                <!-- <th>Layanan</th> -->
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
                                             $no = 1;
-                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE reservasi.status = 'proses'");
+                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE reservasi.status = 'proses' AND reservasi.jenis_layanan = 'pemeriksaan'");
                                             while($display = mysqli_fetch_array($get_data)) {
                                                 $id = $display['id_reservasi'];
                                                 $pasien = $display['nama'];                                            
@@ -97,10 +98,11 @@ date_default_timezone_set('Asia/Jakarta');
 
                                             <tr>
                                                 <td><?php echo $no; ?></td>
+                                                <td><?php echo $tanggal; ?></td>
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
                                                 <td><?php echo $jenis_hewan; ?></td>
-                                                <td><?php echo ucwords($layanan); ?></td>
+                                                <!-- <td><?php echo ucwords($layanan); ?></td> -->
                                                 <td>
                                                     <div class="card-body">
                                                         <div class="action-buttons">

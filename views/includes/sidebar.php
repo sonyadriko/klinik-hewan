@@ -34,14 +34,22 @@
                 </a>
             </li>
             <?php  } ?>
+            <?php if($_SESSION['role'] == 'pasien'){?>
+
+            <li>
+                <a href="lihat-produk.php" data-toggle="tooltip" data-placement="right" title="Produk">
+                    <span><i class="bi bi-bag-check"></i></span>
+                </a>
+            </li>
+            <?php  } ?>
+
 
             <?php if($_SESSION['role'] == 'admin'){?>
-            <!-- <li>
-                <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
-                    id="settings">
-                    <span><i class="bi bi-file-medical"></i></span>
+            <li>
+                <a href="produk.php" data-toggle="tooltip" data-placement="right" title="Produk">
+                    <span><i class="bi bi-bag-check"></i></span>
                 </a>
-            </li> -->
+            </li>
             <li>
                 <a href="akun-pasien.php" data-toggle="tooltip" data-placement="right" title="Akun Pasien">
                     <span><i class="bi bi-person-circle"></i></span>
@@ -55,6 +63,11 @@
                 </a>
             </li>
             <?php  } ?>
+            <li>
+                <a href="forum.php" data-toggle="tooltip" data-placement="right" title="Forum Diskusi">
+                    <span><i class="bi bi-chat-left-text"></i></span>
+                </a>
+            </li>
 
             <li class="logout">
                 <a href="logout.php" data-toggle="tooltip" data-placement="right" title="Signout">

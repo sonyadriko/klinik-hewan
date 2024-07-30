@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slots['grooming_sore'] = $row['count'];
 
     // Check slot availability for pet hotel 
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE jenis_layanan = 'pet_hotel'");
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE jenis_layanan = 'pet_hotel' AND status IN ('proses', 'pending')");
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();

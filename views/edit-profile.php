@@ -108,22 +108,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama</label>
                                         <input type="text" class="form-control" id="nama" name="nama"
-                                            value="<?php echo htmlspecialchars($nama); ?>" required>
+                                            value="<?php echo htmlspecialchars($nama); ?>"
+                                            placeholder="Masukkan nama lengkap" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email" name="email"
-                                            value="<?php echo htmlspecialchars($email); ?>" required>
+                                            value="<?php echo htmlspecialchars($email); ?>"
+                                            placeholder="Masukkan email Anda" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="alamat" class="form-label">Alamat</label>
                                         <input type="text" class="form-control" id="alamat" name="alamat"
-                                            value="<?php echo htmlspecialchars($alamat); ?>" required>
+                                            value="<?php echo htmlspecialchars($alamat); ?>"
+                                            placeholder="Masukkan alamat lengkap">
                                     </div>
                                     <div class="mb-3">
                                         <label for="notelp" class="form-label">Nomor Telepon</label>
                                         <input type="text" class="form-control" id="notelp" name="notelp"
-                                            value="<?php echo ($notelp); ?>" required>
+                                            value="<?php echo htmlspecialchars($notelp); ?>"
+                                            placeholder="Masukkan nomor telepon">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
