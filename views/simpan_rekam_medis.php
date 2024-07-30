@@ -15,11 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $terapi_obat = $_POST['terapi_obat'];
         $created_at = date('Y-m-d H:i:s'); // Get the current date and time
         $reservasi_id = $_POST['reservasi_id'];
+        $rawatinap = $_POST['rawat_inap'];
 
         // Insert data into database
-        $insert_query = "INSERT INTO rekam_medis (reservasi_id, berat_badan, suhu_badan, anamnesa, pemeriksaan_fisik, diagnosa, terapi_obat, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO rekam_medis (reservasi_id, berat_badan, suhu_badan, anamnesa, pemeriksaan_fisik, diagnosa, terapi_obat, rawat_inap, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("isssssss", $reservasi_id, $berat_badan, $suhu_badan, $anamnesa, $pemeriksaan_fisik, $diagnosa, $terapi_obat, $created_at);
+        $stmt->bind_param("issssssss", $reservasi_id, $berat_badan, $suhu_badan, $anamnesa, $pemeriksaan_fisik, $diagnosa, $terapi_obat, $rawatinap, $created_at);
 
         if ($stmt->execute()) {
             $stmt->close();

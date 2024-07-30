@@ -22,13 +22,13 @@
                     <div class="col-xl-5 col-md-6">
                         <div class="mini-logo text-center my-4">
                             <img src="../assets/images/logo.jpg" alt="" width="100" height="100" />
-                            <h4 class="card-title mt-5">Create your account</h4>
+                            <h4 class="card-title mt-5">Buat akun Anda</h4>
                         </div>
                         <div class="auth-form card">
                             <div class="card-body">
                                 <form id="registerForm" class="signin_validate row g-3">
                                     <div class="col-12">
-                                        <input type="text" class="form-control" placeholder="Name" name="name" id="name"
+                                        <input type="text" class="form-control" placeholder="Nama" name="name" id="name"
                                             required />
                                     </div>
                                     <div class="col-12">
@@ -36,7 +36,7 @@
                                             id="email" required />
                                     </div>
                                     <div class="col-12">
-                                        <input type="password" class="form-control" placeholder="Password"
+                                        <input type="password" class="form-control" placeholder="Kata Sandi"
                                             name="password" id="password" required />
                                     </div>
                                     <div class="col-12">
@@ -49,13 +49,13 @@
                                     </div>
                                     <div class="d-grid gap-2">
                                         <button type="submit" class="btn btn-primary">
-                                            Create account
+                                            Buat akun
                                         </button>
                                     </div>
                                 </form>
                                 <p class="mt-3 mb-0">
-                                    Already have an account?
-                                    <a class="text-primary" href="login.php">Sign in</a>
+                                    Sudah memiliki akun?
+                                    <a class="text-primary" href="login.php">Masuk</a>
                                 </p>
                             </div>
                         </div>

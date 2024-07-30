@@ -28,9 +28,21 @@
 
             <?php if($_SESSION['role'] == 'dokter'){?>
             <li>
-                <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis"
+                <a href="rekam-medis.php" data-toggle="tooltip" data-placement="right" title="Rekam Medis Pemeriksaan"
                     id="settings">
-                    <span><i class="bi bi-file-medical"></i></span>
+                    <span><i class="bi bi-file-earmark-medical"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="rekam-medis-grooming.php" data-toggle="tooltip" data-placement="right"
+                    title="Rekam Medis Grooming" id="settings">
+                    <span><i class="bi bi-file-earmark-medical"></i></span>
+                </a>
+            </li>
+            <li>
+                <a href="rekam-medis-pethotel.php" data-toggle="tooltip" data-placement="right"
+                    title="Rekam Medis Pet Hotel" id="settings">
+                    <span><i class="bi bi-file-earmark-medical"></i></span>
                 </a>
             </li>
             <?php  } ?>

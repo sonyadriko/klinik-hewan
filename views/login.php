@@ -29,11 +29,11 @@
                             <div class="card-body">
                                 <form id="loginForm" class="signin_validate row g-3">
                                     <div class="col-12">
-                                        <input type="email" class="form-control" placeholder="hello@example.com"
+                                        <input type="email" class="form-control" placeholder="Masukkan alamat email"
                                             name="email" id="email" />
                                     </div>
                                     <div class="col-12">
-                                        <input type="password" class="form-control" placeholder="Password"
+                                        <input type="password" class="form-control" placeholder="Kata Sandi"
                                             name="password" id="password" />
                                     </div>
                                     <div class="d-grid gap-2">
@@ -43,8 +43,8 @@
                                     </div>
                                 </form>
                                 <p class="mt-3 mb-0">
-                                    Don't have an account?
-                                    <a class="text-primary" href="register.php">Sign up</a>
+                                    Tidak memiliki akun?
+                                    <a class="text-primary" href="register.php">Daftar</a>
                                 </p>
                             </div>
                         </div>

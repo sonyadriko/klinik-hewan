@@ -65,31 +65,37 @@ $id = $_GET['id'];
                                     <div class="mb-3">
                                         <label for="berat_badan" class="form-label">Berat Badan</label>
                                         <input type="text" class="form-control" id="berat_badan" name="berat_badan"
-                                            required>
+                                            placeholder="Masukkan berat badan hewan" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="suhu_badan" class="form-label">Suhu Badan</label>
                                         <input type="text" class="form-control" id="suhu_badan" name="suhu_badan"
-                                            required>
+                                            placeholder="Masukkan suhu badan hewan" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="anamnesa" class="form-label">Anamnesa</label>
-                                        <input type="text" class="form-control" id="anamnesa" name="anamnesa" required>
+                                        <input type="text" class="form-control" id="anamnesa" name="anamnesa"
+                                            placeholder="Masukkan anamnesa hewan" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="pemeriksaan_fisik" class="form-label">Pemeriksaan Fisik</label>
                                         <textarea class="form-control" id="pemeriksaan_fisik" name="pemeriksaan_fisik"
-                                            rows="4" required></textarea>
+                                            rows="4" placeholder="Masukkan hasil pemeriksaan fisik" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="diagnosa" class="form-label">Diagnosa</label>
                                         <textarea class="form-control" id="diagnosa" name="diagnosa" rows="4"
-                                            required></textarea>
+                                            placeholder="Masukkan diagnosa hewan" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="terapi_obat" class="form-label">Terapi/Obat</label>
                                         <textarea class="form-control" id="terapi_obat" name="terapi_obat" rows="4"
-                                            required></textarea>
+                                            placeholder="Masukkan terapi atau obat yang diberikan" required></textarea>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <label class="form-check-label" for="rawat_inap">Perlu Rawat Inap</label>
+                                        <input type="checkbox" class="form-check-input" id="rawat_inap"
+                                            name="rawat_inap">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
