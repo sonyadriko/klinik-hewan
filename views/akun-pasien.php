@@ -52,6 +52,9 @@ ini_set('display_errors', 1); ?>
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Data Akun Pasien</h4>
+                                <a href="tambah-pasien.php" class="btn btn-primary">
+                                    Tambah Data Pasien
+                                </a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
