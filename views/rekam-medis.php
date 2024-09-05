@@ -18,7 +18,7 @@ date_default_timezone_set('Asia/Jakarta');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Rekam Medis</title>
+    <title>Rekam Medis Pemeriksaan</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
@@ -113,6 +113,11 @@ date_default_timezone_set('Asia/Jakarta');
                                                             <a href="tambah-rekam-medis.php?id=<?php echo urlencode($id); ?>"
                                                                 class="btn btn-info btn-user">Isi Laporan</a>
                                                             <?php endif; ?>
+                                                            <!-- <a href="delete.php?id=<?php echo urlencode($id); ?>"
+                                                                class="btn btn-danger btn-user"
+                                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a> -->
+                                                            <button class="btn btn-danger btn-user"
+                                                                onclick="confirmDelete('<?php echo urlencode($id); ?>')">Hapus</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -168,6 +173,23 @@ date_default_timezone_set('Asia/Jakarta');
             table.column(4).search(layanan).draw();
         });
     });
+
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to delete.php with the specified ID
+                window.location.href = 'delete_rekam_medis.php?id=' + id;
+            }
+        });
+    }
     </script>
 </body>
 

@@ -53,7 +53,7 @@ if (!$data) {
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong>Lihat Rekam Medis Grooming</strong>
+                                <strong>Lihat Rekam Medis Pemeriksaan</strong>
                             </p>
                         </div>
                     </div>
@@ -62,7 +62,7 @@ if (!$data) {
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Detail Laporan Grooming</h4>
+                                <h4 class="card-title">Detail Laporan Pemeriksaan</h4>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered">

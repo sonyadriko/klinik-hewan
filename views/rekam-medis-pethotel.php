@@ -18,7 +18,7 @@ date_default_timezone_set('Asia/Jakarta');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Rekam Medis</title>
+    <title>Rekam Medis Pet Hotel</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
@@ -111,8 +111,11 @@ date_default_timezone_set('Asia/Jakarta');
                                                         onclick="confirmCheckout(<?php echo $id; ?>)">Check
                                                         out</button>
                                                     <?php }else { ?>
-                                                    <?php echo $status; ?>
+                                                    <?php echo 'Selesai '; ?>
+                                                    <!-- <?php echo 'Selesai ' . $status; ?> -->
                                                     <?php } ?>
+                                                    <!-- <button class="btn btn-danger btn-user"
+                                                        onclick="confirmDelete('<?php echo urlencode($id); ?>')">Hapus</button> -->
                                                 </td>
                                             </tr>
                                             <?php
@@ -158,6 +161,23 @@ date_default_timezone_set('Asia/Jakarta');
             if (result.isConfirmed) {
                 document.getElementById('checkoutId').value = id;
                 document.getElementById('checkoutForm').submit();
+            }
+        });
+    }
+
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to delete.php with the specified ID
+                window.location.href = 'delete_rekam_medis.php?id=' + id;
             }
         });
     }

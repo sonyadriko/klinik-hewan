@@ -80,14 +80,19 @@
                     <span><i class="bi bi-chat-left-text"></i></span>
                 </a>
             </li>
-
-            <li class="logout">
+            <li>
                 <a href="logout.php" data-toggle="tooltip" data-placement="right" title="Signout">
                     <span><i class="bi bi-box-arrow-right"></i></span>
                 </a>
             </li>
+
+            <!-- <li class="logout">
+                <a href="logout.php" data-toggle="tooltip" data-placement="right" title="Signout">
+                    <span><i class="bi bi-box-arrow-right"></i></span>
+                </a>
+            </li> -->
         </ul>
 
-        <p class="copyright">&#169; <a href="#">Qkit</a></p>
+        <!-- <p class="copyright">&#169; <a href="#">Qkit</a></p> -->
     </div>
 </div>

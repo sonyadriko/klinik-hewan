@@ -18,7 +18,7 @@ date_default_timezone_set('Asia/Jakarta');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Rekam Medis</title>
+    <title>Rekam Medis Grooming</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
@@ -43,7 +43,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Rekam Medis Pemeriksaan</strong>
+                                <strong> Rekam Medis Grooming</strong>
                             </p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Rekam Medis Pemeriksaan</h4>
+                                <h4 class="card-title">Data Rekam Medis Grooming</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -113,6 +113,8 @@ date_default_timezone_set('Asia/Jakarta');
                                                             <a href="tambah-rekam-medis-grooming.php?id=<?php echo urlencode($id); ?>"
                                                                 class="btn btn-info btn-user">Isi Laporan</a>
                                                             <?php endif; ?>
+                                                            <button class="btn btn-danger btn-user"
+                                                                onclick="confirmDelete('<?php echo urlencode($id); ?>')">Hapus</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -157,6 +159,23 @@ date_default_timezone_set('Asia/Jakarta');
             }
         });
     });
+
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to delete.php with the specified ID
+                window.location.href = 'delete_rekam_medis.php?id=' + id;
+            }
+        });
+    }
     </script>
 </body>
 
