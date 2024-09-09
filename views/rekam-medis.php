@@ -18,7 +18,7 @@ date_default_timezone_set('Asia/Jakarta');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Rekam Medis Pemeriksaan</title>
+    <title>Rekam Medis</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
@@ -43,7 +43,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Rekam Medis Pemeriksaan</strong>
+                                <strong> Rekam Medis</strong>
                             </p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Rekam Medis Pemeriksaan</h4>
+                                <h4 class="card-title">Data Rekam Medis</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -92,10 +92,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 $record_result = $stmt->get_result();
                                                 $record_exists = $record_result->num_rows > 0;
                                                 $stmt->close();
-
                                             ?>
-
-
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $tanggal; ?></td>

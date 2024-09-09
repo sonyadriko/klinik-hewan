@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Tambah Pasien</strong>
+                                <strong> Tambah Pemilik Hewan</strong>
                             </p>
                         </div>
                     </div>
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Form Tambah Pasien</h4>
+                                <h4 class="card-title">Form Tambah Pemilik Hewan</h4>
                             </div>
                             <div class="card-body">
                                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">

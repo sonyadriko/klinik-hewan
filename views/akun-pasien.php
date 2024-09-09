@@ -42,7 +42,7 @@ ini_set('display_errors', 1); ?>
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Akun Pasien</strong>
+                                <strong> Akun Pemilik Hewan</strong>
                             </p>
                         </div>
                     </div>
@@ -51,9 +51,9 @@ ini_set('display_errors', 1); ?>
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Akun Pasien</h4>
+                                <h4 class="card-title">Data Akun Pemilih Hewan</h4>
                                 <a href="tambah-pasien.php" class="btn btn-primary">
-                                    Tambah Data Pasien
+                                    Tambah Data Pemilih Hewan
                                 </a>
                             </div>
                             <div class="card-body">
