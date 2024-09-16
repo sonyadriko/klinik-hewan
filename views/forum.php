@@ -100,11 +100,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if($_SESSION['role'] == 'dokter' || $_SESSION['role'] == 'admin'){?>
 
                         <a href="reply.php?id_diskusi=<?php echo $row['id_diskusi']; ?>"
-                            class="btn btn-secondary mt-2">Balas</a>
+                            class="btn btn-info mt-2">Balas</a>
                         <?php } ?>
                         <?php if($_SESSION['role'] == 'pasien'){?>
                         <a href="reply.php?id_diskusi=<?php echo $row['id_diskusi']; ?>"
-                            class="btn btn-secondary mt-2">Lihat</a>
+                            class="btn btn-info mt-2">Lihat</a>
                         <?php } ?>
 
 

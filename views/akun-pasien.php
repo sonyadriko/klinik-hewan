@@ -16,7 +16,7 @@ ini_set('display_errors', 1); ?>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Akun Pasien</title>
+    <title>Akun Pemilik Hewan</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
@@ -51,9 +51,9 @@ ini_set('display_errors', 1); ?>
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Akun Pemilih Hewan</h4>
+                                <h4 class="card-title">Data Akun Pemilik Hewan</h4>
                                 <a href="tambah-pasien.php" class="btn btn-primary">
-                                    Tambah Data Pemilih Hewan
+                                    Tambah Data Pemilik Hewan
                                 </a>
                             </div>
                             <div class="card-body">

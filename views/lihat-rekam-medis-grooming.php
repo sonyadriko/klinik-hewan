@@ -103,7 +103,8 @@ if (!$data) {
                                         <td><?php echo $data['inspeksi_kutu'] ? 'Ya' : 'Tidak'; ?></td>
                                     </tr>
                                 </table>
-                                <a href="rekam-medis-grooming.php" class="btn btn-secondary mt-3">Kembali</a>
+                                <a href="edit-rekam-medis-grooming.php?id=<?php echo $data['id_reservasi']; ?>" class="btn btn-warning mt-3">Edit</a>
+                                <a href="rekam-medis-grooming.php" class="btn btn-info mt-3">Kembali</a>
                             </div>
                         </div>
                     </div>

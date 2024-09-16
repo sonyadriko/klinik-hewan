@@ -84,34 +84,35 @@ if (!$data) {
                                     </tr>
                                     <tr>
                                         <th>Berat Badan</th>
-                                        <td><?php echo $data['berat_badan'] ? 'Ya' : 'Tidak'; ?></td>
+                                        <td><?php echo $data['berat_badan']?></td>
                                     </tr>
                                     <tr>
                                         <th>Suhu Badan</th>
-                                        <td><?php echo $data['suhu_badan'] ? 'Ya' : 'Tidak'; ?></td>
+                                        <td><?php echo $data['suhu_badan']?></td>
                                     </tr>
                                     <tr>
                                         <th>Anamnesa</th>
-                                        <td><?php echo $data['anamnesa'] ? 'Ya' : 'Tidak'; ?></td>
+                                        <td><?php echo $data['anamnesa']?></td>
                                     </tr>
                                     <tr>
                                         <th>Pemeriksaan Fisik</th>
-                                        <td><?php echo $data['pemeriksaan_fisik'] ? 'Ya' : 'Tidak'; ?></td>
+                                        <td><?php echo $data['pemeriksaan_fisik']?></td>
                                     </tr>
                                     <tr>
                                         <th>Diagnosa</th>
-                                        <td><?php echo $data['diagnosa'] ? 'Ya' : 'Tidak'; ?></td>
+                                        <td><?php echo $data['diagnosa']?></td>
                                     </tr>
                                     <tr>
                                         <th>Terapi Obat</th>
-                                        <td><?php echo $data['terapi_obat'] ? 'Ya' : 'Tidak'; ?></td>
+                                        <td><?php echo $data['terapi_obat']?></td>
                                     </tr>
                                     <tr>
                                         <th>Rawat Inap</th>
                                         <td><?php echo $data['rawat_inap'] ? 'Ya' : 'Tidak'; ?></td>
                                     </tr>
                                 </table>
-                                <a href="rekam-medis-grooming.php" class="btn btn-secondary mt-3">Kembali</a>
+                                <a href="edit-rekam-medis.php?id=<?php echo $data['id_reservasi']; ?>" class="btn btn-warning mt-3">Edit</a>
+                                <a href="rekam-medis.php" class="btn btn-info mt-3">Kembali</a>
                             </div>
                         </div>
                     </div>
