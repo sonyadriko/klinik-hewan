@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Tambah Rekam Medis Grooming</title>
+    <title>Tambah Data Grooming</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet"
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong>Tambah Rekam Medis Grooming</strong>
+                                <strong>Tambah Data Grooming</strong>
                             </p>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tambah Laporan Grooming</h4>
+                                <h4 class="card-title">Tambah Data Laporan Grooming</h4>
                             </div>
                             <div class="card-body">
                                 <form action="" method="POST">

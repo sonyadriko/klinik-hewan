@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Tambah Pasien</title>
+    <title>Tambah Pemilik Hewan</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.ico" />
     <!-- Custom Stylesheet -->
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="page-title-content">
                             <p>
                                 Halaman
-                                <strong> Tambah Pasien</strong>
+                                <strong> Tambah Pemilik Hewan</strong>
                             </p>
                         </div>
                     </div>
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Form Tambah Pasien</h4>
+                                <h4 class="card-title">Form Tambah Pemilik Hewan</h4>
                             </div>
                             <div class="card-body">
                                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
