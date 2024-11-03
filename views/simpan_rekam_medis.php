@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $terapi_obat = $_POST['terapi_obat'];
         $created_at = date('Y-m-d H:i:s'); // Get the current date and time
         $reservasi_id = $_POST['reservasi_id'];
-        $rawatinap = $_POST['rawat_inap'];
+        $rawatinap = isset($_POST['rawat_inap']) ? 1 : 0; // Set value based on checkbox
 
         // Insert data into database
         $insert_query = "INSERT INTO rekam_medis (reservasi_id, berat_badan, suhu_badan, anamnesa, pemeriksaan_fisik, diagnosa, terapi_obat, rawat_inap, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -23,6 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("issssssss", $reservasi_id, $berat_badan, $suhu_badan, $anamnesa, $pemeriksaan_fisik, $diagnosa, $terapi_obat, $rawatinap, $created_at);
 
         if ($stmt->execute()) {
+            $update_query = "UPDATE reservasi SET status = 'selesai' WHERE id_reservasi = ?";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bind_param("i", $reservasi_id); // Assuming id is an integer
+            $update_stmt->execute();
+            $update_stmt->close();
+            
             $stmt->close();
             $conn->close();
             // Redirect to the page where the medical records are listed

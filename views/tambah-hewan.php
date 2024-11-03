@@ -17,11 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nama_hewan = $_POST['nama_hewan'];
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $jenis_hewan = $_POST['jenis_hewan'];
+        $ras_hewan = $_POST['ras_hewan'];
         $users_id = $_SESSION['id_users']; // Menggunakan session untuk mendapatkan id pengguna
 
-        $insert_query = "INSERT INTO hewan (users_id, nama_hewan, jenis_kelamin, jenis_hewan) VALUES (?, ?, ?, ?)";
+        $insert_query = "INSERT INTO hewan (users_id, nama_hewan, jenis_kelamin, jenis_hewan, ras_hewan) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("isss", $users_id, $nama_hewan, $jenis_kelamin, $jenis_hewan);
+        $stmt->bind_param("issss", $users_id, $nama_hewan, $jenis_kelamin, $jenis_hewan, $ras_hewan);
 
         if ($stmt->execute()) {
             $success = true;
@@ -83,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="mb-3">
                                         <label for="nama_hewan" class="form-label">Nama Hewan</label>
                                         <input type="text" class="form-control" id="nama_hewan" name="nama_hewan"
-                                            required>
+                                            placeholder="Masukkan nama hewan" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
@@ -94,8 +95,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     <div class="mb-3">
                                         <label for="jenis_hewan" class="form-label">Jenis Hewan</label>
-                                        <input type="text" class="form-control" id="jenis_hewan" name="jenis_hewan"
-                                            required>
+                                        <select class="form-control" id="jenis_hewan" name="jenis_hewan" required>
+                                            <option value="Kucing">Kucing</option>
+                                            <option value="Anjing">Anjing</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="ras_hewan" class="form-label">Ras Hewan</label>
+                                        <input type="text" class="form-control" id="ras_hewan" name="ras_hewan"
+                                            placeholder="Masukkan ras hewan" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>

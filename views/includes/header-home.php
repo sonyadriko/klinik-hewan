@@ -38,18 +38,18 @@
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link text-primary" href="#">Home
+                                    <a class="nav-link" href="index.php">Home
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../assets/price.html">Tentang Kami</a>
+                                    <a class="nav-link" href="tentang-kami.php">Tentang Kami</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../assets/app.html">Layanan Kami</a>
+                                    <a class="nav-link" href="layanan-kami.php">Layanan Kami</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" href="../assets/app.html">Blog</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
 

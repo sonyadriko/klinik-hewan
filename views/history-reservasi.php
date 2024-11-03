@@ -90,8 +90,10 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
-                                                <td><?php echo $tanggal . ', ' . $slot; ?></td>
-                                                <td><?php echo $layanan; ?></td>
+                                                <td><?php echo $tanggal . ', ' . ($slot === 'pet_hotel' ? 'Pet Hotel' : ($slot === 'grooming_pagi' ? 'Grooming Pagi' : ($slot === 'grooming_sore' ? 'Grooming Sore' : ($slot === 'sore' ? 'Sore' : ($slot === 'pagi' ? 'Pagi' : $slot))))); ?>
+                                                </td>
+                                                <td><?php echo $layanan === 'pet_hotel' ? 'Pet Hotel' : ($layanan === 'pemeriksaan' ? 'Pemeriksaan' : ($layanan === 'grooming' ? 'Grooming' : $layanan)); ?>
+                                                </td>
                                             </tr>
                                             <?php
                                             $no++;

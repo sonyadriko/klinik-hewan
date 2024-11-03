@@ -36,8 +36,9 @@
 
 
                             <div class="intro-btn">
-                                <a href="#" class="btn btn-primary btn-sm py-2 px-3 me-3 shadow-sm">Mulai</a>
-                                <a href="#" class="btn btn-outline-dark btn-sm py-2 px-3 shadow-sm">Pelajari Lebih
+                                <a href="login.php" class="btn btn-primary btn-sm py-2 px-3 me-3 shadow-sm">Mulai</a>
+                                <a href="login.php" class="btn btn-outline-dark btn-sm py-2 px-3 shadow-sm">Pelajari
+                                    Lebih
                                     Lanjut</a>
                             </div>
                         </div>
@@ -69,7 +70,7 @@
                                 Daftarkan diri Anda untuk mengakses layanan kami dan mengelola catatan
                                 kesehatan hewan peliharaan Anda.
                             </p>
-                            <a href="#">Daftar Sekarang <i class="bi bi-arrow-right-short"></i></a>
+                            <a href="register.php">Daftar Sekarang <i class="bi bi-arrow-right-short"></i></a>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
@@ -80,7 +81,7 @@
                                 Jadwalkan kunjungan dengan dokter hewan kami yang berpengalaman untuk kebutuhan hewan
                                 peliharaan Anda.
                             </p>
-                            <a href="#">Jadwalkan Sekarang <i class="bi bi-arrow-right-short"></i></a>
+                            <a href="login.php">Jadwalkan Sekarang <i class="bi bi-arrow-right-short"></i></a>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
@@ -90,7 +91,7 @@
                             <p>
                                 Temukan lebih lanjut tentang lokasi klinik kami dan semua layanan yang kami tawarkan.
                             </p>
-                            <a href="#">Jelajahi <i class="bi bi-arrow-right-short"></i></a>
+                            <a href="login.php">Jelajahi <i class="bi bi-arrow-right-short"></i></a>
                         </div>
                     </div>
                 </div>
@@ -184,18 +185,18 @@
                                 <div class="row align-items-center">
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="customer-img">
-                                            <img class="img-fluid" src="../assets/images/testimonial/1.jpg" alt="" />
+                                            <img class="img-fluid" src="../assets/images/people/people1.jpg" alt="" />
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="customer-review">
-                                            <img class="img-fluid" src="../assets/images/brand/2.webp" alt="" />
+                                            <!-- <img class="img-fluid" src="../assets/images/brand/2.webp" alt="" /> -->
                                             <p>
-                                                Klinik veteriner terbaik yang pernah kami kunjungi! Anjing kami selalu
-                                                mendapatkan perawatan yang sangat baik.
+                                                Vet Pawn Print merupakan klinik hewan terbaik yang pernah kami kunjungi!
+                                                Anjing kami selalu mendapatkan perawatan yang sangat baik.
                                             </p>
                                             <div class="customer-info">
-                                                <h6>Jane Doe</h6>
+                                                <h6>Kirana</h6>
                                                 <p>Pemilik Hewan Peliharaan</p>
                                             </div>
                                         </div>
@@ -204,19 +205,18 @@
                                 <div class="row align-items-center">
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="customer-img">
-                                            <img class="img-fluid" src="../assets/images/testimonial/2.jpg" alt="" />
+                                            <img class="img-fluid" src="../assets/images/people/people2.jpg" alt="" />
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="customer-review">
-                                            <img class="img-fluid" src="../assets/images/brand/3.webp" alt="" />
+                                            <!-- <img class="img-fluid" src="../assets/images/brand/3.webp" alt="" /> -->
                                             <p>
                                                 Stafnya sangat berpengetahuan dan ramah. Sangat merekomendasikan untuk
-                                                semua
-                                                kebutuhan hewan peliharaan!
+                                                semua kebutuhan hewan peliharaan!
                                             </p>
                                             <div class="customer-info">
-                                                <h6>John Smith</h6>
+                                                <h6>Shafa</h6>
                                                 <p>Pemilik Hewan Peliharaan</p>
                                             </div>
                                         </div>

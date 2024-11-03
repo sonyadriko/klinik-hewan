@@ -121,13 +121,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <label for="alamat" class="form-label">Alamat</label>
                                         <input type="text" class="form-control" id="alamat" name="alamat"
                                             value="<?php echo htmlspecialchars($alamat); ?>"
-                                            placeholder="Masukkan alamat lengkap">
+                                            placeholder="Masukkan alamat lengkap" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="notelp" class="form-label">Nomor Telepon</label>
                                         <input type="text" class="form-control" id="notelp" name="notelp"
                                             value="<?php echo htmlspecialchars($notelp); ?>"
-                                            placeholder="Masukkan nomor telepon">
+                                            placeholder="Masukkan nomor telepon" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>

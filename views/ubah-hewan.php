@@ -27,6 +27,7 @@ if (isset($_GET['id'])) {
         $nama_hewan = $row['nama_hewan'];
         $jenis_kelamin = $row['jenis_kelamin'];
         $jenis_hewan = $row['jenis_hewan'];
+        $ras_hewan = $row['ras_hewan'];
     } else {
         $error_message = "Data hewan tidak ditemukan.";
     }
@@ -35,16 +36,17 @@ if (isset($_GET['id'])) {
 
 // Proses ubah hewan jika form sudah disubmit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['nama_hewan'], $_POST['jenis_kelamin'], $_POST['jenis_hewan'], $_POST['id_hewan'])) {
+    if (isset($_POST['nama_hewan'], $_POST['jenis_kelamin'], $_POST['jenis_hewan'], $_POST['id_hewan'], $_POST['ras_hewan'])) {
         $id_hewan = $_POST['id_hewan'];
         $nama_hewan = $_POST['nama_hewan'];
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $jenis_hewan = $_POST['jenis_hewan'];
+        $ras_hewan = $_POST['ras_hewan'];
         $users_id = $_SESSION['id_users']; // Menggunakan session untuk mendapatkan id pengguna
 
-        $update_query = "UPDATE hewan SET nama_hewan = ?, jenis_kelamin = ?, jenis_hewan = ? WHERE id_hewan = ? AND users_id = ?";
+        $update_query = "UPDATE hewan SET nama_hewan = ?, jenis_kelamin = ?, jenis_hewan = ?, ras_hewan = ? WHERE id_hewan = ? AND users_id = ?";
         $stmt = $conn->prepare($update_query);
-        $stmt->bind_param("sssii", $nama_hewan, $jenis_kelamin, $jenis_hewan, $id_hewan, $users_id);
+        $stmt->bind_param("ssssii", $nama_hewan, $jenis_kelamin, $jenis_hewan, $ras_hewan, $id_hewan, $users_id);
 
         if ($stmt->execute()) {
             $success = true;
@@ -125,10 +127,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     <div class="mb-3">
                                         <label for="jenis_hewan" class="form-label">Jenis Hewan</label>
-                                        <input type="text" class="form-control" id="jenis_hewan" name="jenis_hewan"
-                                            value="<?php echo htmlspecialchars($jenis_hewan); ?>" required>
+                                        <select class="form-control" id="jenis_hewam" name="jenis_hewan" required>
+                                            <option value="Kucing"
+                                                <?php echo $jenis_kelamin == 'Kucing' ? 'selected' : ''; ?>>Kucing
+                                            </option>
+                                            <option value="Anjing"
+                                                <?php echo $jenis_kelamin == 'Anjing' ? 'selected' : ''; ?>>Anjing
+                                            </option>
+                                        </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <div class="mb-3">
+                                        <label for="ras_hewan" class="form-label">Ras Hewan</label>
+                                        <input type="text" class="form-control" id="ras_hewan" name="ras_hewan"
+                                            value="<?php echo htmlspecialchars($ras_hewan); ?>" required>
+                                    </div> <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>
                             </div>
                         </div>

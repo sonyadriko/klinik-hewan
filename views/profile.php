@@ -118,6 +118,7 @@ if (!isset($_SESSION['nama'])) {
                                                 <th>Nama Hewan</th>
                                                 <th>Jenis Hewan</th>
                                                 <th>Jenis Kelamin</th>
+                                                <th>Ras Hewan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -135,6 +136,7 @@ if (!isset($_SESSION['nama'])) {
                                                     <td>' . htmlspecialchars($row['nama_hewan']) . '</td>
                                                     <td>' . htmlspecialchars($row['jenis_hewan']) . '</td>
                                                     <td>' . htmlspecialchars($row['jenis_kelamin']) . '</td>
+                                                    <td>' . htmlspecialchars($row['ras_hewan']) . '</td>
                                                     <td>
                                                         <div class="action-buttons">
                                                             <a href="ubah-hewan.php?id=' . $row['id_hewan'] . '" class="btn btn-primary btn-user">Ubah</a>

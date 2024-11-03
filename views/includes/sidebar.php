@@ -47,21 +47,21 @@
             </li>
             <?php  } ?>
             <?php if($_SESSION['role'] == 'pasien'){?>
-
+            <!-- 
             <li>
                 <a href="lihat-produk.php" data-toggle="tooltip" data-placement="right" title="Produk">
                     <span><i class="bi bi-bag-check"></i></span>
                 </a>
-            </li>
+            </li> -->
             <?php  } ?>
 
 
             <?php if($_SESSION['role'] == 'admin'){?>
-            <li>
+            <!-- <li>
                 <a href="produk.php" data-toggle="tooltip" data-placement="right" title="Produk">
                     <span><i class="bi bi-bag-check"></i></span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="akun-pasien.php" data-toggle="tooltip" data-placement="right" title="Akun Pasien">
                     <span><i class="bi bi-person-circle"></i></span>
