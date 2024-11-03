@@ -70,36 +70,66 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <th>Nama Hewan</th>
                                                 <th>Tanggal, Waktu</th>
                                                 <th>Jenis Layanan</th>
+                                                <th>Invoice</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $no = 1;
-                                            $user = $_SESSION['id_users'];
-                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi JOIN users ON reservasi.user_id = users.id_users JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE user_id = $user");
-                                            while($display = mysqli_fetch_array($get_data)) {
-                                                $id = $display['id_reservasi'];
-                                                $pasien = $display['nama'];                                            
-                                                $hewan = $display['nama_hewan'];
-                                                $tanggal = $display['tanggal_reservasi'];
-                                                $waktu = $display['waktu_reservasi'];
-                                                $slot = $display['slot_reservasi'];
-                                                $layanan = $display['jenis_layanan'];
-                                            ?>
+    $no = 1;
+    $user = $_SESSION['id_users'];
+    $get_data = mysqli_query($conn, "SELECT * FROM reservasi JOIN users ON reservasi.user_id = users.id_users JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE user_id = $user");
+    while ($display = mysqli_fetch_array($get_data)) {
+        $id = $display['id_reservasi'];
+        $pasien = $display['nama'];                                            
+        $hewan = $display['nama_hewan'];
+        $tanggal = $display['tanggal_reservasi'];
+        $waktu = $display['waktu_reservasi'];
+        $slot = $display['slot_reservasi'];
+        $layanan = $display['jenis_layanan'];
+
+        // Check if an invoice exists for this reservation
+        $invoice_check_query = "SELECT * FROM invoice WHERE id_reservasi = '$id'";
+        $invoice_check_result = mysqli_query($conn, $invoice_check_query);
+        $invoice_exists = mysqli_num_rows($invoice_check_result) > 0;
+    ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
-                                                <td><?php echo $tanggal . ', ' . ($slot === 'pet_hotel' ? 'Pet Hotel' : ($slot === 'grooming_pagi' ? 'Grooming Pagi' : ($slot === 'grooming_sore' ? 'Grooming Sore' : ($slot === 'sore' ? 'Sore' : ($slot === 'pagi' ? 'Pagi' : $slot))))); ?>
+                                                <td>
+                                                    <?php 
+            echo $tanggal . ', ' . 
+            ($slot === 'pet_hotel' ? 'Pet Hotel' : 
+            ($slot === 'grooming_pagi' ? 'Grooming Pagi' : 
+            ($slot === 'grooming_sore' ? 'Grooming Sore' : 
+            ($slot === 'sore' ? 'Sore' : 
+            ($slot === 'pagi' ? 'Pagi' : $slot)))));
+            ?>
                                                 </td>
-                                                <td><?php echo $layanan === 'pet_hotel' ? 'Pet Hotel' : ($layanan === 'pemeriksaan' ? 'Pemeriksaan' : ($layanan === 'grooming' ? 'Grooming' : $layanan)); ?>
+                                                <td>
+                                                    <?php echo $layanan === 'pet_hotel' ? 'Pet Hotel' : 
+                        ($layanan === 'pemeriksaan' ? 'Pemeriksaan' : 
+                        ($layanan === 'grooming' ? 'Grooming' : $layanan)); ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($invoice_exists): ?>
+                                                    <?php $invoice_data = mysqli_fetch_array($invoice_check_result);?>
+
+                                                    <a href="invoice.php?id=<?php echo $invoice_data['id_invoice']; ?>"
+                                                        class="btn btn-primary btn-sm">
+                                                        Lihat Invoice
+                                                    </a>
+                                                    <?php else: ?>
+                                                    <span>Tidak Ada Invoice</span>
+                                                    <?php endif; ?>
                                                 </td>
                                             </tr>
                                             <?php
-                                            $no++;
-                                                }
-                                            ?>
+        $no++;
+    }
+    ?>
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>

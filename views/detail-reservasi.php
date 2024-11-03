@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Fetch reservation details based on the ID
-    $query = "SELECT reservasi.*, users.nama AS nama_pemilik, hewan.nama_hewan 
+    $query = "SELECT reservasi.*, users.nama AS nama_pemilik, hewan.nama_hewan, users.notelp
               FROM reservasi 
               LEFT JOIN users ON reservasi.user_id = users.id_users 
               LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan 
@@ -92,6 +92,21 @@ if (isset($_GET['id'])) {
                                     class="btn btn-primary">
                                     Lihat Invoice
                                 </a>
+                                <!-- WhatsApp Chat Button -->
+                                <?php if (!empty($detail['notelp'])): // Check if notelp is available ?>
+                                <?php 
+                                    // Create the message for WhatsApp including service type and animal name
+                                    $serviceType = ucfirst($detail['jenis_layanan']);
+                                    $animalName = ucfirst($detail['nama_hewan']);
+                                    $message = "Halo, layanan $serviceType untuk hewan $animalName Anda sudah selesai dan bisa diambil. Terima kasih!";
+                                ?>
+                                <a href="https://wa.me/62<?php echo $detail['notelp']; ?>?text=<?php echo urlencode($message); ?>"
+                                    target="_blank" class="btn btn-success">
+                                    Chat WA
+                                </a>
+                                <?php else: ?>
+                                <span class="text-danger">Nomor telepon tidak tersedia.</span>
+                                <?php endif; ?>
                                 <?php else: ?>
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#invoiceModal">
