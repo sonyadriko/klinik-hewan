@@ -13038,7 +13038,7 @@ strong {
   position: fixed;
   left: 0px;
   height: calc(100%-20px);
-  width: 85px;
+  width: 120px;
   top: 0px;
   z-index: 3;
   bottom: 0px;
@@ -13069,7 +13069,7 @@ strong {
 }
 
 .menu {
-  margin-top: 100px;
+  margin-top: 10px;
 }
 
 @media only screen and (max-width: 767px) {
