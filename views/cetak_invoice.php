@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Invoice - INV-0<?php echo $invoice['id_invoice']; ?></title>
+    <title>Cetak Invoice<?php echo $invoice['id_invoice']; ?></title>
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -52,7 +52,21 @@ if (isset($_GET['id'])) {
         padding: 20px;
     }
 
-    .invoice-header,
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .invoice-details {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        text-align: center;
+        /* Center the text inside the div */
+    }
+
     .invoice-footer {
         text-align: center;
     }
@@ -69,13 +83,22 @@ if (isset($_GET['id'])) {
         padding: 10px;
         text-align: left;
     }
+
+    .logo {
+        max-width: 100px;
+        /* Adjust the size of the logo */
+    }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="invoice-header">
+            <img src="../assets/images/logo.jpg" alt="Logo" class="logo">
             <h1>Invoice</h1>
+        </div>
+        <!-- New div for invoice details -->
+        <div class="invoice-details">
             <p><strong>Invoice Kepada:</strong> <?php echo $invoice['nama_hewan'] . ' - ' . $invoice['nama_user']; ?>
             </p>
             <p><strong>ID Invoice:</strong> INV-0<?php echo $invoice['id_invoice']; ?></p>
@@ -105,7 +128,7 @@ if (isset($_GET['id'])) {
             </tbody>
         </table>
 
-        <p><strong>Total Keseluruhan:</strong> <?php 
+        <p class="mt-2"><strong>Total Keseluruhan:</strong> <?php 
             $total_query = "SELECT SUM(total) AS total_harga FROM detail_invoice WHERE id_invoice = '$invoice_id'";
             $total_result = mysqli_query($conn, $total_query);
             $total_data = mysqli_fetch_array($total_result);

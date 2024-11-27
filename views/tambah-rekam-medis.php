@@ -78,9 +78,9 @@ $id = $_GET['id'];
                                             placeholder="Masukkan anamnesa hewan" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="pemeriksaan_fisik" class="form-label">Pemeriksaan Fisik</label>
+                                        <label for="pemeriksaan_fisik" class="form-label">Pemeriksaan</label>
                                         <textarea class="form-control" id="pemeriksaan_fisik" name="pemeriksaan_fisik"
-                                            rows="4" placeholder="Masukkan hasil pemeriksaan fisik" required></textarea>
+                                            rows="4" placeholder="Masukkan hasil pemeriksaan" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="diagnosa" class="form-label">Diagnosa</label>

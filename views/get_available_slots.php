@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slots = [];
 
     // Check slot availability for pemeriksaan pagi
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'pemeriksaan' AND slot_reservasi = 'pagi'");
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'pemeriksaan' AND slot_reservasi = 'pemeriksaan_pagi'");
     $stmt->bind_param("s", $tanggal_reservasi);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slots['pemeriksaan_pagi'] = $row['count'];
 
     // Check slot availability for pemeriksaan sore
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'pemeriksaan' AND slot_reservasi = 'sore'");
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'pemeriksaan' AND slot_reservasi = 'pemeriksaan_sore'");
     $stmt->bind_param("s", $tanggal_reservasi);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slots['pemeriksaan_sore'] = $row['count'];
 
     // Check slot availability for grooming pagi
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'grooming' AND slot_reservasi = 'pagi'");
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'grooming' AND slot_reservasi = 'grooming_pagi'");
     $stmt->bind_param("s", $tanggal_reservasi);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slots['grooming_pagi'] = $row['count'];
 
     // Check slot availability for grooming sore
-    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'grooming' AND slot_reservasi = 'sore'");
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM reservasi WHERE tanggal_reservasi = ? AND jenis_layanan = 'grooming' AND slot_reservasi = 'grooming_sore'");
     $stmt->bind_param("s", $tanggal_reservasi);
     $stmt->execute();
     $result = $stmt->get_result();
