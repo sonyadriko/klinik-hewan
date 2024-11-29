@@ -88,6 +88,12 @@ if (isset($_GET['id'])) {
         max-width: 100px;
         /* Adjust the size of the logo */
     }
+
+    .signature {
+        text-align: right;
+        margin-top: 50px;
+        padding-right: 20px;
+    }
     </style>
 </head>
 
@@ -137,7 +143,15 @@ if (isset($_GET['id'])) {
 
         <div class="invoice-footer">
             <p>Terima kasih atas kepercayaan Anda!</p>
+            <div class="signature">
+                <!-- <p>Hormat Kami,</p> -->
+                <br><br>
+                <p>______________________</p>
+                <p><strong>Admin/Dokter</strong></p>
+            </div>
         </div>
+
+
     </div>
 
     <script>
