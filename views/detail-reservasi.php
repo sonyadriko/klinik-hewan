@@ -24,6 +24,11 @@ if (isset($_GET['id'])) {
         echo "Reservasi tidak ditemukan.";
         exit;
     }
+    
+    // Fetch grooming data based on the reservation ID
+    $grooming_query = "SELECT * FROM rekam_medis_grooming WHERE reservasi_id = '$id'";
+    $grooming_result = mysqli_query($conn, $grooming_query);
+    $grooming_data = mysqli_fetch_array($grooming_result);
 
     // Check if an invoice already exists for this reservation
     $check_invoice_query = "SELECT * FROM invoice WHERE id_reservasi = '$id'";
@@ -82,6 +87,19 @@ if (isset($_GET['id'])) {
                                 <p><strong>Nama Hewan:</strong> <?php echo $detail['nama_hewan']; ?></p>
                                 <p><strong>Tanggal Reservasi:</strong> <?php echo $detail['tanggal_reservasi']; ?></p>
                                 <p><strong>Jenis Layanan:</strong> <?php echo ucwords($detail['jenis_layanan']); ?></p>
+                                <?php if ($grooming_data): ?>
+                                <p><strong>Data Grooming:</strong></p>
+                                <ul>
+                                    <li>Mandi: <?php echo $grooming_data['mandi'] ? 'Ya' : 'Tidak'; ?></li>
+                                    <li>Perawatan Bulu: <?php echo $grooming_data['perawatan_bulu'] ? 'Ya' : 'Tidak'; ?>
+                                    </li>
+                                    <li>Trimming: <?php echo $grooming_data['trimming'] ? 'Ya' : 'Tidak'; ?></li>
+                                    <li>Pembersihan Telinga:
+                                        <?php echo $grooming_data['pembersihan_telinga'] ? 'Ya' : 'Tidak'; ?></li>
+                                    <li>Inspeksi Kutu: <?php echo $grooming_data['inspeksi_kutu'] ? 'Ya' : 'Tidak'; ?>
+                                    </li>
+                                </ul>
+                                <?php endif; ?>
                                 <p><strong>Status:</strong> <?php echo ucwords($detail['status']); ?></p>
                             </div>
                             <div class="card-footer">

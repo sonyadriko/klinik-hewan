@@ -20,6 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("iiiiii", $id_reservasi, $mandi, $perawatan_bulu, $trimming, $pembersihan_telinga, $inspeksi_kutu);
     
     if ($stmt->execute()) {
+        $update_query = "UPDATE reservasi SET status = 'selesai' WHERE id_reservasi = ?";
+        $update_stmt = $conn->prepare($update_query);
+        $update_stmt->bind_param("i", $id_reservasi);
+        $update_stmt->execute();
+        $update_stmt->close();
+        
+        $stmt->close();
+        $conn->close();
         echo '<script>
             document.addEventListener("DOMContentLoaded", function() {
                 Swal.fire("Success", "Data berhasil disimpan!", "success").then(() => {
