@@ -64,45 +64,45 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <th>Nama Pemilik</th>
                                                 <th>Nama Hewan</th>
                                                 <th>Jenis Hewan</th>
-                                                <!-- <th>Layanan</th> -->
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
                                             $no = 1;
-                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE reservasi.status = 'proses' AND reservasi.jenis_layanan = 'grooming'");
-                                            while($display = mysqli_fetch_array($get_data)) {
+                                            $query = "
+                                                SELECT r.id_reservasi, r.tanggal_reservasi, u.nama AS nama_pemilik, h.nama_hewan, h.jenis_hewan
+                                                FROM reservasi r
+                                                INNER JOIN users u ON r.user_id = u.id_users
+                                                INNER JOIN hewan h ON r.hewan_id = h.id_hewan
+                                                WHERE r.status = 'proses' OR r.status = 'selesai' AND r.jenis_layanan = 'grooming'
+                                                ORDER BY r.tanggal_reservasi DESC
+                                            ";
+                                            $stmt = $conn->prepare($query);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+
+                                            while ($display = $result->fetch_assoc()) {
                                                 $id = $display['id_reservasi'];
-                                                $pasien = $display['nama'];                                            
+                                                $pasien = $display['nama_pemilik'];
                                                 $hewan = $display['nama_hewan'];
                                                 $tanggal = $display['tanggal_reservasi'];
-                                                $waktu = $display['waktu_reservasi'];
-                                                $layanan = $display['jenis_layanan'];
                                                 $jenis_hewan = $display['jenis_hewan'];
-                                                if ($layanan === 'pet_hotel') {
-                                                    $layanan = 'Pet Hotel';
-                                                }
-                                                $slot = $display['slot_reservasi'];
 
                                                 $check_query = "SELECT * FROM rekam_medis_grooming WHERE reservasi_id = ?";
-                                                $stmt = $conn->prepare($check_query);
-                                                $stmt->bind_param("i", $id);
-                                                $stmt->execute();
-                                                $record_result = $stmt->get_result();
+                                                $check_stmt = $conn->prepare($check_query);
+                                                $check_stmt->bind_param("i", $id);
+                                                $check_stmt->execute();
+                                                $record_result = $check_stmt->get_result();
                                                 $record_exists = $record_result->num_rows > 0;
-                                                $stmt->close();
-
+                                                $check_stmt->close();
                                             ?>
-
-
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $tanggal; ?></td>
                                                 <td><?php echo $pasien; ?></td>
                                                 <td><?php echo $hewan; ?></td>
                                                 <td><?php echo $jenis_hewan; ?></td>
-                                                <!-- <td><?php echo ucwords($layanan); ?></td> -->
                                                 <td>
                                                     <div class="card-body">
                                                         <div class="action-buttons">
@@ -113,15 +113,17 @@ date_default_timezone_set('Asia/Jakarta');
                                                             <a href="tambah-rekam-medis-grooming.php?id=<?php echo urlencode($id); ?>"
                                                                 class="btn btn-info btn-user">Isi Laporan</a>
                                                             <?php endif; ?>
-                                                            <button class="btn btn-danger btn-user"
-                                                                onclick="confirmDelete('<?php echo urlencode($id); ?>')">Hapus</button>
+                                                            <!-- <button class="btn btn-danger btn-user"
+                                                                onclick="confirmDelete('<?php echo urlencode($id); ?>')">Hapus</button> -->
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <?php
                                                     $no++;
-                                                }?>
+                                                }
+                                                $stmt->close();
+                                                ?>
                                         </tbody>
                                     </table>
                                 </div>

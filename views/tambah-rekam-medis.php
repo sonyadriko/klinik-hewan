@@ -11,7 +11,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$id = $_GET['id'];
+$id = intval($_GET['id']);
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +33,8 @@ $id = $_GET['id'];
 
 <body class="dashboard">
     <div id="main-wrapper">
-        <?php include 'includes/header.php' ?>
-        <?php include 'includes/sidebar.php' ?>
+        <?php include 'includes/header.php'; ?>
+        <?php include 'includes/sidebar.php'; ?>
 
         <div class="content-body">
             <div class="container-fluid">
@@ -58,10 +58,6 @@ $id = $_GET['id'];
                                 <form action="simpan_rekam_medis.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="reservasi_id"
                                         value="<?php echo htmlspecialchars($id); ?>">
-                                    <!-- <div class="mb-3">
-                                        <label for="tanggal" class="form-label">Tanggal</label>
-                                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
-                                    </div> -->
                                     <div class="mb-3">
                                         <label for="berat_badan" class="form-label">Berat Badan</label>
                                         <input type="text" class="form-control" id="berat_badan" name="berat_badan"
@@ -93,9 +89,9 @@ $id = $_GET['id'];
                                             placeholder="Masukkan terapi atau obat yang diberikan" required></textarea>
                                     </div>
                                     <div class="mb-3 form-check">
-                                        <label class="form-check-label" for="rawat_inap">Perlu Rawat Inap</label>
                                         <input type="checkbox" class="form-check-input" id="rawat_inap"
                                             name="rawat_inap">
+                                        <label class="form-check-label" for="rawat_inap">Perlu Rawat Inap</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </form>

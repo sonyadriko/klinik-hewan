@@ -8,8 +8,6 @@ if (!isset($_SESSION['nama'])) {
 }
 // Set timezone to WIB (UTC+7)
 date_default_timezone_set('Asia/Jakarta');
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,12 +34,12 @@ date_default_timezone_set('Asia/Jakarta');
         <?php include 'includes/header.php'; ?>
         <?php include 'includes/sidebar.php'; ?>
         <?php if (isset($_GET['message'])) {
-        if ($_GET['message'] == 'checkout_success') {
-            echo '<script>Swal.fire("Success", "Check out berhasil!", "success");</script>';
-        } elseif ($_GET['message'] == 'checkout_error') {
-            echo '<script>Swal.fire("Error", "Check out gagal!", "error");</script>';
-        }
-    } ?>
+            if ($_GET['message'] == 'checkout_success') {
+                echo '<script>Swal.fire("Success", "Check out berhasil!", "success");</script>';
+            } elseif ($_GET['message'] == 'checkout_error') {
+                echo '<script>Swal.fire("Error", "Check out gagal!", "error");</script>';
+            }
+        } ?>
         <div class="content-body">
             <div class="container-fluid">
                 <div class="row">
@@ -70,65 +68,58 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <th>Nama Pemilik</th>
                                                 <th>Nama Hewan</th>
                                                 <th>Jenis Hewan</th>
-                                                <!-- <th>Layanan</th> -->
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
                                             $no = 1;
-                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan WHERE reservasi.status IN ('proses', 'check out') AND reservasi.jenis_layanan = 'pet_hotel'");
-                                            while($display = mysqli_fetch_array($get_data)) {
+                                            $query = "
+                                                SELECT r.id_reservasi, r.tanggal_reservasi, u.nama AS nama_pemilik, h.nama_hewan, h.jenis_hewan, r.status
+                                                FROM reservasi r
+                                                INNER JOIN users u ON r.user_id = u.id_users
+                                                INNER JOIN hewan h ON r.hewan_id = h.id_hewan
+                                                WHERE r.status IN ('proses', 'check out') AND r.jenis_layanan = 'pet_hotel'
+                                                ORDER BY r.tanggal_reservasi DESC
+                                            ";
+                                            $stmt = $conn->prepare($query);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+
+                                            while ($display = $result->fetch_assoc()) {
                                                 $id = $display['id_reservasi'];
-                                                $pasien = $display['nama'];                                            
+                                                $pasien = $display['nama_pemilik'];
                                                 $hewan = $display['nama_hewan'];
                                                 $tanggal = $display['tanggal_reservasi'];
-                                                $waktu = $display['waktu_reservasi'];
-                                                $layanan = $display['jenis_layanan'];
                                                 $jenis_hewan = $display['jenis_hewan'];
                                                 $status = $display['status'];
-                                                if ($layanan === 'pet_hotel') {
-                                                    $layanan = 'Pet Hotel';
-                                                }
-                                                $slot = $display['slot_reservasi'];
-
                                             ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td><?php echo $tanggal; ?></td>
-                                                <td><?php echo $pasien; ?></td>
-                                                <td><?php echo $hewan; ?></td>
-                                                <td><?php echo $jenis_hewan; ?></td>
-                                                <!-- <td><?php echo ucwords($layanan); ?></td> -->
+                                                <td><?php echo htmlspecialchars($tanggal); ?></td>
+                                                <td><?php echo htmlspecialchars($pasien); ?></td>
+                                                <td><?php echo htmlspecialchars($hewan); ?></td>
+                                                <td><?php echo htmlspecialchars($jenis_hewan); ?></td>
                                                 <td>
-                                                    <!-- <form action="update_status_pethotel.php" method="POST">
-                                                        <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                                        <button type="submit" class="btn btn-info btn-user">Check
-                                                            out</button>
-                                                    </form> -->
-                                                    <?php if($status == 'proses'){?>
+                                                    <?php if ($status == 'proses') { ?>
                                                     <button type="button" class="btn btn-info btn-user"
-                                                        onclick="confirmCheckout(<?php echo $id; ?>)">Check
-                                                        out</button>
-                                                    <?php }else { ?>
-                                                    <?php echo 'Selesai '; ?>
-                                                    <!-- <?php echo 'Selesai ' . $status; ?> -->
+                                                        onclick="confirmCheckout(<?php echo $id; ?>)">Check out</button>
+                                                    <?php } else { ?>
+                                                    <?php echo 'Selesai'; ?>
                                                     <?php } ?>
-                                                    <!-- <button class="btn btn-danger btn-user"
-                                                        onclick="confirmDelete('<?php echo urlencode($id); ?>')">Hapus</button> -->
                                                 </td>
                                             </tr>
                                             <?php
-                $no++;
-            }
-        ?>
+                                                $no++;
+                                            }
+                                            $stmt->close();
+                                            ?>
                                         </tbody>
                                     </table>
                                     <form id="checkoutForm" action="update_status_pethotel.php" method="POST"
                                         style="display:none;">
                                         <input type="hidden" name="id" id="checkoutId">
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -136,7 +127,6 @@ date_default_timezone_set('Asia/Jakarta');
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
@@ -181,9 +171,7 @@ date_default_timezone_set('Asia/Jakarta');
             }
         });
     }
-    </script>
 
-    <script>
     $(document).ready(function() {
         var table = $('#reservasiTable').DataTable({
             "paging": true,

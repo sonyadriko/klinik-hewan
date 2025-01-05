@@ -8,12 +8,12 @@ if (!isset($_SESSION['nama'])) {
 date_default_timezone_set('Asia/Jakarta');
 $id_reservasi = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$query = "SELECT reservasi.*, users.nama AS nama_pemilik, hewan.nama_hewan, hewan.jenis_hewan, rekam_medis_grooming.* 
-          FROM reservasi 
-          LEFT JOIN users ON reservasi.user_id = users.id_users 
-          LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan 
-          LEFT JOIN rekam_medis_grooming ON reservasi.id_reservasi = rekam_medis_grooming.reservasi_id 
-          WHERE reservasi.id_reservasi = ?";
+$query = "SELECT r.*, u.nama AS nama_pemilik, h.nama_hewan, h.jenis_hewan, g.* 
+          FROM reservasi r
+          JOIN users u ON r.user_id = u.id_users 
+          JOIN hewan h ON r.hewan_id = h.id_hewan 
+          JOIN rekam_medis_grooming g ON r.id_reservasi = g.reservasi_id 
+          WHERE r.id_reservasi = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id_reservasi);
 $stmt->execute();
@@ -60,7 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Edit Data Grooming</title>
     <link rel="stylesheet" href="../assets/css/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
@@ -90,23 +91,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="card-body">
                                 <form action="" method="POST">
                                     <div class="form-group">
-                                        <input type="checkbox" name="mandi" <?php echo $data['mandi'] ? 'checked' : ''; ?> >
+                                        <input type="checkbox" name="mandi" id="mandi"
+                                            <?php echo $data['mandi'] ? 'checked' : ''; ?>>
                                         <label for="mandi">Mandi</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="checkbox" name="perawatan_bulu" <?php echo $data['perawatan_bulu'] ? 'checked' : ''; ?> >
+                                        <input type="checkbox" name="perawatan_bulu" id="perawatan_bulu"
+                                            <?php echo $data['perawatan_bulu'] ? 'checked' : ''; ?>>
                                         <label for="perawatan_bulu">Perawatan Bulu</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="checkbox" name="trimming" <?php echo $data['trimming'] ? 'checked' : ''; ?> >
+                                        <input type="checkbox" name="trimming" id="trimming"
+                                            <?php echo $data['trimming'] ? 'checked' : ''; ?>>
                                         <label for="trimming">Trimming atau Potong Kuku</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="checkbox" name="pembersihan_telinga" <?php echo $data['pembersihan_telinga'] ? 'checked' : ''; ?> >
+                                        <input type="checkbox" name="pembersihan_telinga" id="pembersihan_telinga"
+                                            <?php echo $data['pembersihan_telinga'] ? 'checked' : ''; ?>>
                                         <label for="pembersihan_telinga">Pembersihan Telinga</label>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input type="checkbox" name="inspeksi_kutu" <?php echo $data['inspeksi_kutu'] ? 'checked' : ''; ?> >
+                                        <input type="checkbox" name="inspeksi_kutu" id="inspeksi_kutu"
+                                            <?php echo $data['inspeksi_kutu'] ? 'checked' : ''; ?>>
                                         <label for="inspeksi_kutu">Inspeksi Kutu</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Simpan</button>

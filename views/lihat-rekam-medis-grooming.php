@@ -8,12 +8,12 @@ if (!isset($_SESSION['nama'])) {
 date_default_timezone_set('Asia/Jakarta');
 $id_reservasi = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$query = "SELECT reservasi.*, users.nama AS nama_pemilik, hewan.nama_hewan, hewan.jenis_hewan, rekam_medis_grooming.* 
-          FROM reservasi 
-          LEFT JOIN users ON reservasi.user_id = users.id_users 
-          LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan 
-          LEFT JOIN rekam_medis_grooming ON reservasi.id_reservasi = rekam_medis_grooming.reservasi_id 
-          WHERE reservasi.id_reservasi = ?";
+$query = "SELECT r.*, u.nama AS nama_pemilik, h.nama_hewan, h.jenis_hewan, g.* 
+          FROM reservasi r 
+          JOIN users u ON r.user_id = u.id_users 
+          JOIN hewan h ON r.hewan_id = h.id_hewan 
+          JOIN rekam_medis_grooming g ON r.id_reservasi = g.reservasi_id 
+          WHERE r.id_reservasi = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id_reservasi);
 $stmt->execute();
@@ -68,19 +68,19 @@ if (!$data) {
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>Tanggal Reservasi</th>
-                                        <td><?php echo $data['tanggal_reservasi']; ?></td>
+                                        <td><?php echo htmlspecialchars($data['tanggal_reservasi']); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Nama Pemilik</th>
-                                        <td><?php echo $data['nama_pemilik']; ?></td>
+                                        <td><?php echo htmlspecialchars(ucwords($data['nama_pemilik'])); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Nama Hewan</th>
-                                        <td><?php echo $data['nama_hewan']; ?></td>
+                                        <td><?php echo htmlspecialchars(ucwords($data['nama_hewan'])); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Jenis Hewan</th>
-                                        <td><?php echo $data['jenis_hewan']; ?></td>
+                                        <td><?php echo htmlspecialchars($data['jenis_hewan']); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Mandi</th>
@@ -103,7 +103,8 @@ if (!$data) {
                                         <td><?php echo $data['inspeksi_kutu'] ? 'Ya' : 'Tidak'; ?></td>
                                     </tr>
                                 </table>
-                                <a href="edit-rekam-medis-grooming.php?id=<?php echo $data['id_reservasi']; ?>" class="btn btn-warning mt-3">Edit</a>
+                                <a href="edit-rekam-medis-grooming.php?id=<?php echo urlencode($data['id_reservasi']); ?>"
+                                    class="btn btn-warning mt-3">Edit</a>
                                 <a href="rekam-medis-grooming.php" class="btn btn-info mt-3">Kembali</a>
                             </div>
                         </div>

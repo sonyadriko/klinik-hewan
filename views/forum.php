@@ -7,8 +7,8 @@ $success = false;
 $error_message = "";
 
 // Fetch discussion questions from the database
-$query = "SELECT * FROM diskusi JOIN users on diskusi.user_id = users.id_users ORDER BY created_at DESC";
-$result = mysqli_query($conn, $query);
+$query = "SELECT diskusi.*, users.nama FROM diskusi JOIN users ON diskusi.user_id = users.id_users ORDER BY created_at DESC";
+$result = $conn->query($query);
 
 // Handle new question submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <?php if($_SESSION['role'] == 'pasien'){?>
 
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="mb-4">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="mb-4">
                     <div class="mb-3">
                         <label for="content" class="form-label">Pertanyaan</label>
                         <textarea class="form-control" id="content" name="content" rows="4"
@@ -91,19 +91,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php } ?>
 
                 <h2>Pertanyaan Diskusi</h2>
-                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                <?php while ($row = $result->fetch_assoc()) { ?>
                 <div class="card mb-3">
                     <div class="card-body">
                         <p class="card-text"><?php echo nl2br(htmlspecialchars($row['isi_diskusi'])); ?></p>
-                        <small class="text-muted">Dibuat oleh <?php echo $row['nama'] ?>, pada:
+                        <small class="text-muted">Dibuat oleh <?php echo htmlspecialchars($row['nama']); ?>, pada:
                             <?php echo date("d M Y, H:i", strtotime($row['created_at'])); ?></small>
                         <?php if($_SESSION['role'] == 'dokter' || $_SESSION['role'] == 'admin'){?>
 
-                        <a href="reply.php?id_diskusi=<?php echo $row['id_diskusi']; ?>"
+                        <a href="reply.php?id_diskusi=<?php echo urlencode($row['id_diskusi']); ?>"
                             class="btn btn-info mt-2">Balas</a>
                         <?php } ?>
                         <?php if($_SESSION['role'] == 'pasien'){?>
-                        <a href="reply.php?id_diskusi=<?php echo $row['id_diskusi']; ?>"
+                        <a href="reply.php?id_diskusi=<?php echo urlencode($row['id_diskusi']); ?>"
                             class="btn btn-info mt-2">Lihat</a>
                         <?php } ?>
 

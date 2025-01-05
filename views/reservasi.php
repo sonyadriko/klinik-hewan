@@ -43,9 +43,7 @@ if (!isset($_SESSION['nama'])) {
         <?php include 'includes/header.php'; ?>
         <?php include 'includes/sidebar.php'; ?>
 
-        <?php if($_SESSION['role'] == 'pasien'){ ?>
-
-
+        <?php if ($_SESSION['role'] == 'pasien') { ?>
         <div class="content-body">
             <div class="container-fluid">
                 <div class="row">
@@ -107,9 +105,6 @@ if (!isset($_SESSION['nama'])) {
                 </div>
             </div>
         </div>
-
-
-
         <?php } else { ?>
         <div class="content-body">
             <div class="container-fluid">
@@ -157,52 +152,51 @@ if (!isset($_SESSION['nama'])) {
                                         <tbody>
                                             <?php 
                                             $no = 1;
-                                            $get_data = mysqli_query($conn, "SELECT * FROM reservasi LEFT JOIN users ON reservasi.user_id = users.id_users LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan ");
-                                            while($display = mysqli_fetch_array($get_data)) {
+                                            $query = "SELECT reservasi.*, users.nama, hewan.nama_hewan 
+                                                      FROM reservasi 
+                                                      LEFT JOIN users ON reservasi.user_id = users.id_users 
+                                                      LEFT JOIN hewan ON reservasi.hewan_id = hewan.id_hewan 
+                                                      ORDER BY reservasi.tanggal_reservasi DESC";
+                                            $stmt = $conn->prepare($query);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+
+                                            while ($display = $result->fetch_assoc()) {
                                                 $id = $display['id_reservasi'];
-                                                $pasien = $display['nama'];                                            
+                                                $pasien = $display['nama'];
                                                 $hewan = $display['nama_hewan'];
                                                 $tanggal = $display['tanggal_reservasi'];
-                                                $waktu = $display['waktu_reservasi'];
-                                                $layanan = $display['jenis_layanan'];
-                                                if ($layanan === 'pet_hotel') {
-                                                    $layanan = 'Pet Hotel';
-                                                }
                                                 $slot = $display['slot_reservasi'];
+                                                $layanan = $display['jenis_layanan'];
                                                 $status = $display['status'];
                                             ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td><?php echo $pasien; ?></td>
-                                                <td><?php echo $hewan; ?></td>
-                                                <td><?php echo $tanggal . ', ' . ($slot === 'pet_hotel' ? 'Pet Hotel' : ($slot === 'grooming_pagi' ? 'Grooming Pagi' : ($slot === 'grooming_sore' ? 'Grooming Sore' : ($slot === 'sore' ? 'Sore' : ($slot === 'pagi' ? 'Pagi' : $slot))))); ?>
+                                                <td><?php echo ucwords(htmlspecialchars($pasien)); ?></td>
+                                                <td><?php echo ucwords(htmlspecialchars($hewan)); ?></td>
+                                                <td><?php echo htmlspecialchars(date("d F Y", strtotime($tanggal)) . ', ' . ($slot === 'pet_hotel' ? 'Pet Hotel' : ($slot === 'grooming_pagi' ? 'Grooming Pagi' : ($slot === 'grooming_sore' ? 'Grooming Sore' : ($slot === 'sore' ? 'Sore' : ($slot === 'pagi' ? 'Pagi' : $slot)))))); ?>
                                                 </td>
                                                 <td><?php echo ucwords($layanan); ?></td>
                                                 <td>
-                                                    <?php if($status=="pending"){?>
+                                                    <?php if ($status == "pending") { ?>
                                                     <div class="action-buttons">
                                                         <a href='layani_reservasi.php?id=<?php echo $id; ?>'
                                                             class="btn btn-primary btn-user">Layani</a>
                                                         <a href='delete_reservasi.php?id=<?php echo $id; ?>'
                                                             class="btn btn-danger btn-user delete-btn">Hapus</a>
-                                                        <!-- <button class="btn btn-danger btn-user delete-btn"
-                                                            data-id="<?php echo $id; ?>">Hapus</button> -->
-
                                                     </div>
-                                                    <?php } ?>
-                                                    <?php if($status == "proses"){?>
+                                                    <?php } elseif ($status == "proses") { ?>
                                                     <?php echo $status; ?>
-
-                                                    <?php } ?>
-                                                    <?php if($status != "pending" && $status != "proses"){?>
+                                                    <?php } else { ?>
                                                     <a href='detail-reservasi.php?id=<?php echo $id; ?>'
                                                         class="btn btn-primary btn-user">Detail</a>
                                                     <?php } ?>
                                                 </td>
                                             </tr>
                                             <?php
-                                            $no++;
-                                                }
+                                                $no++;
+                                            }
+                                            $stmt->close();
                                             ?>
                                         </tbody>
                                     </table>
@@ -248,7 +242,7 @@ if (!isset($_SESSION['nama'])) {
                                 $stmt->execute();
                                 $result = $stmt->get_result();
                                 while ($row = $result->fetch_assoc()) {
-                                    echo "<option value='" . $row['id_hewan'] . "'>" . htmlspecialchars($row['nama_hewan']) . "</option>";
+                                    echo "<option value='" . htmlspecialchars($row['id_hewan']) . "'>" . htmlspecialchars($row['nama_hewan']) . "</option>";
                                 }
                                 $stmt->close();
                                 ?>
@@ -376,46 +370,7 @@ if (!isset($_SESSION['nama'])) {
                 });
             });
     });
-    </script>
 
-
-    <!-- <script>
-    $('#reservasiModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var serviceType = button.data('service-type'); // Extract info from data-* attribute
-        var modal = $(this);
-        modal.find('.modal-body input#service_type').val(serviceType); // Update the modal's content
-
-        var timeSelect = modal.find('.modal-body select#waktu_reservasi');
-        var slotSelect = modal.find('.modal-body select#slot_reservasi');
-
-        timeSelect.change(function() {
-            var timeOfDay = $(this).val();
-            populateSlots(timeOfDay);
-        });
-
-        // Populate slots initially based on the selected time of day
-        populateSlots(timeSelect.val());
-    });
-
-    function populateSlots(timeOfDay) {
-        var slots = [];
-        if (timeOfDay === 'morning') {
-            slots = ['08:00-09:00', '09:00-10:00', '10:00-11:00', '11:00-12:00'];
-        } else if (timeOfDay === 'afternoon') {
-            slots = ['13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00'];
-        }
-
-        var slotSelect = $('#slot_reservasi');
-        slotSelect.empty();
-        slots.forEach(function(slot) {
-            slotSelect.append('<option value="' + slot + '">' + slot + '</option>');
-        });
-    }
-    </script>
- -->
-
-    <script>
     $(document).ready(function() {
         var table = $('#reservasiTable').DataTable({
             "paging": true,
@@ -437,52 +392,6 @@ if (!isset($_SESSION['nama'])) {
             table.column(4).search(layanan).draw();
         });
     });
-    </script>
-    <script>
-    // Handle form submission with AJAX
-    // $(document).ready(function() {
-    //     $('#reservasiForm').submit(function(event) {
-    //         event.preventDefault();
-    //         var form = $(this);
-    //         var url = form.attr('action');
-
-    //         $.ajax({
-    //             type: "POST",
-    //             url: url,
-    //             data: form.serialize(),
-    //             dataType: "json",
-    //             success: function(data) {
-    //                 if (data.success) {
-    //                     Swal.fire({
-    //                         title: 'Sukses',
-    //                         text: 'Reservasi berhasil dibuat!',
-    //                         icon: 'success',
-    //                         confirmButtonText: 'OK'
-    //                     }).then((result) => {
-    //                         if (result.isConfirmed) {
-    //                             window.location.href = 'dashboard.php';
-    //                         }
-    //                     });
-    //                 } else {
-    //                     Swal.fire({
-    //                         title: 'Gagal',
-    //                         text: 'Terjadi kesalahan saat menyimpan reservasi.',
-    //                         icon: 'error',
-    //                         confirmButtonText: 'OK'
-    //                     });
-    //                 }
-    //             },
-    //             error: function() {
-    //                 Swal.fire({
-    //                     title: 'Gagal',
-    //                     text: 'Terjadi kesalahan saat menyimpan reservasi.',
-    //                     icon: 'error',
-    //                     confirmButtonText: 'OK'
-    //                 });
-    //             }
-    //         });
-    //     });
-    // });
     </script>
 </body>
 
