@@ -127,8 +127,8 @@ if (isset($_GET['id'])) {
                 <tr>
                     <td><?php echo $item['item']; ?></td>
                     <td><?php echo $item['jumlah']; ?></td>
-                    <td><?php echo number_format($item['harga'], 2); ?></td>
-                    <td><?php echo number_format($item['total'], 2); ?></td>
+                    <td><?php  echo "Rp. " .  number_format($item['harga'], 2); ?></td>
+                    <td><?php  echo "Rp. " .  number_format($item['total'], 2); ?></td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -138,7 +138,7 @@ if (isset($_GET['id'])) {
             $total_query = "SELECT SUM(total) AS total_harga FROM detail_invoice WHERE id_invoice = '$invoice_id'";
             $total_result = mysqli_query($conn, $total_query);
             $total_data = mysqli_fetch_array($total_result);
-            echo number_format($total_data['total_harga'], 2);
+            echo "Rp. " .  number_format($total_data['total_harga'], 2);
         ?></p>
 
         <div class="invoice-footer">

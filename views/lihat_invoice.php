@@ -99,12 +99,15 @@ if (isset($_GET['id'])) {
                                         <?php endwhile; ?>
                                     </tbody>
                                 </table>
-                                <p><strong>Total Keseluruhan:</strong> <?php 
+                                <p><strong>Total Keseluruhan:</strong> 
+                                <?php 
                                     $total_query = "SELECT SUM(total) AS total_harga FROM detail_invoice WHERE id_invoice = '$invoice_id'";
                                     $total_result = mysqli_query($conn, $total_query);
                                     $total_data = mysqli_fetch_array($total_result);
-                                    echo number_format($total_data['total_harga'], 2);
-                                ?></p>
+
+                                    // Menambahkan format mata uang Rp
+                                    echo "Rp. " . number_format($total_data['total_harga'], 2, ',', '.');
+                                    ?>
                             </div>
                             <div class="card-footer">
                                 <a href="reservasi.php" class="btn btn-secondary">Kembali</a>
